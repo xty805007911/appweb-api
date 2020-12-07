@@ -1,0 +1,25 @@
+server:
+  port: 80
+
+swagger:
+  enable: true
+
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        # 读数据库
+        master:
+          url: jdbc:mysql://47.92.212.63:3306/micro_service?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+          username: root
+          password: bjfu1022
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        # 写数据库
+        write:
+          url: jdbc:mysql://47.92.212.63:3306/micro_service?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+          username: root
+          password: bjfu1022
+          driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
