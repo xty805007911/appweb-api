@@ -1,6 +1,7 @@
 package com.ctsi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -20,9 +21,12 @@ public class TbUser {
     private String password;
     private String realname;
     private Integer gender;
-    private String phone;
+    private String mobile;
     private Date create_time;
     private String address;
     private Integer enabled;
     private String avatar;
+
+    @TableField(exist = false)
+    private String token;
 }

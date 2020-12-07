@@ -6,6 +6,8 @@ import com.ctsi.util.CookieUtils;
 import com.ctsi.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +25,15 @@ public class CommonController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/user/login")
-    public Result login(HttpServletResponse response) {
-        TbUser user = userService.getUserByUsernameAndPassword("admin", "admin");
-        CookieUtils.setCookie(response,"token",user.getId()+"");
+    @PostMapping("/user/login")
+    public Result login(@RequestBody TbUser formUser) {
+        TbUser user = userService.getUserByMobileAndPassword(formUser.getMobile(), formUser.getPassword());
         return Result.ok(user);
+    }
+
+    @GetMapping("/user/logout")
+    public Result logout() {
+        return Result.ok();
     }
 
     @GetMapping("/user/info")
@@ -35,5 +41,11 @@ public class CommonController {
         String token = CookieUtils.getCookie(request, "token");
         Integer id = Integer.parseInt(token);
         return Result.ok(userService.getUserById(id));
+    }
+
+    @PostMapping("/user/register")
+    public Result register(@RequestBody TbUser user) {
+        userService.saveUser(user);
+        return Result.ok();
     }
 }

@@ -20,9 +20,9 @@ public class UserService {
     @Autowired
     TbUserMapper userMapper;
 
-    public TbUser getUserByUsernameAndPassword(String username,String password) {
+    public TbUser getUserByMobileAndPassword(String mobile,String password) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("username",username);
+        queryWrapper.eq("mobile",mobile);
         queryWrapper.eq("password",password);
         List list = userMapper.selectList(queryWrapper);
         if(CollectionUtils.isEmpty(list)) {
@@ -33,5 +33,9 @@ public class UserService {
 
     public TbUser getUserById(Integer id) {
         return userMapper.selectById(id);
+    }
+
+    public void saveUser(TbUser user) {
+        userMapper.insert(user);
     }
 }

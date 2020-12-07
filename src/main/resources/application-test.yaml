@@ -14,6 +14,8 @@ spring:
           username: root
           password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
+          hikari:
+            max-lifetime: 500000
 mybatis-plus:
   configuration:
         log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
