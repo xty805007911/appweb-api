@@ -1,22 +1,28 @@
 package com.ctsi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.io.Serializable;
+import java.util.Date;
 
 /**
- * @ClassName : TestUser
+ * @ClassName : TbUser
  * @Description :
  * @Author : Xiaotianyu  //作者
- * @Date: 2020-11-03 18:43
+ * @Date: 2020-12-07 17:28
  */
 @Data
-public class TestUser implements Serializable {
+public class TbUser {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String username;
     private String password;
+    private String realname;
+    private Integer gender;
+    private String phone;
+    private Date create_time;
+    private String address;
+    private Integer enabled;
+    private String avatar;
 }
