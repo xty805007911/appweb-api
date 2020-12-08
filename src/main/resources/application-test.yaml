@@ -16,6 +16,8 @@ spring:
           driver-class-name: com.mysql.cj.jdbc.Driver
           hikari:
             max-lifetime: 500000
+  thymeleaf:
+    cache: false
 mybatis-plus:
   configuration:
         log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
