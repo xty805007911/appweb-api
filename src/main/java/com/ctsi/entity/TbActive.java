@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -37,10 +37,10 @@ public class TbActive implements Serializable {
 
     private String images;
 
-
+    @DateTimeFormat(pattern="mm/dd/yyyy")
     private Date startTime;
 
-
+    @DateTimeFormat(pattern="mm/dd/yyyy")
     private Date endTime;
 
 
@@ -48,6 +48,15 @@ public class TbActive implements Serializable {
 
 
     private Integer personNum;
+
+    private Integer status;
+
+    private Integer enabled;
+
+    private Integer type;
+
+    @DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+    private Date createTime;
 
 
 }

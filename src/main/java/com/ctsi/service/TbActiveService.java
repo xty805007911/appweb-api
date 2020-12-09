@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,6 +21,11 @@ public class TbActiveService {
 
     //添加活动
     public void add(TbActive active) {
+        //填充其他属性
+        active.setCreateTime(new Date());
+        active.setEnabled(1);
+        active.setStatus(1);
+
         activeMapper.insert(active);
     }
 
