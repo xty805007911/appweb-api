@@ -1,7 +1,7 @@
 package com.ctsi.controller;
 
 import com.ctsi.entity.TbUser;
-import com.ctsi.service.UserService;
+import com.ctsi.service.TbUserService;
 import com.ctsi.util.CookieUtils;
 import com.ctsi.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +23,7 @@ import java.util.Map;
 public class CommonController {
 
     @Autowired
-    UserService userService;
+    TbUserService userService;
 
     //首页
     @RequestMapping("/")
@@ -44,10 +43,9 @@ public class CommonController {
         return "/login";
     }
     //用户登录
-    @PostMapping("/user/login")
+    @RequestMapping("/user/login")
     public String userLogin(HttpServletRequest request, HttpSession session, TbUser formUser) {
         TbUser user = userService.getUserByMobileAndPassword(formUser.getMobile(), formUser.getPassword());
-
         if(user == null || user.getId() == null) {
             Map<String,Object> map = new HashMap<>();
             map.put("error","mobile or password error.");

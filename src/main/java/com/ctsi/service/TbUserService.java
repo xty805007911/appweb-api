@@ -16,7 +16,7 @@ import java.util.List;
  * @Date: 2020-12-07 17:30
  */
 @Repository
-public class UserService {
+public class TbUserService {
     @Autowired
     TbUserMapper userMapper;
 
