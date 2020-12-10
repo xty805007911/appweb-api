@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ctsi-biyi-generator
@@ -23,29 +24,21 @@ public class TbActive implements Serializable {
     @TableField("`desc`")
     private String desc;
 
-
     private Float cost;
-
 
     private String address;
 
     private Integer createUserId;
 
-
     private String code;
 
-
-    private String images;
-
-    @DateTimeFormat(pattern="mm/dd/yyyy")
+    @DateTimeFormat(pattern="MM/dd/yyyy")
     private Date startTime;
 
-    @DateTimeFormat(pattern="mm/dd/yyyy")
+    @DateTimeFormat(pattern="MM/dd/yyyy")
     private Date endTime;
 
-
     private String mobile;
-
 
     private Integer personNum;
 
@@ -55,8 +48,19 @@ public class TbActive implements Serializable {
 
     private Integer type;
 
+    private Integer isHot;
+
     @DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
     private Date createTime;
+
+    @TableField(exist = false)
+    private List<TbFileUrl> fileList;
+
+    @TableField(exist = false)
+    private TbUser createUser;//创建者
+
+    @TableField(exist = false)
+    private String image;
 
 
 }

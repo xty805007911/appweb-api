@@ -28,6 +28,9 @@ public class CommonController {
     //首页
     @RequestMapping("/")
     public String index(HttpServletRequest request) {
+
+        request.getSession().setAttribute("sessionUser",userService.getUserById(1));
+
         Map<String,Object> map = new HashMap<>();
         map.put("message","测试成功");
         request.setAttribute("result",map);

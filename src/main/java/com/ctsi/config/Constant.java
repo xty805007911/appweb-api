@@ -9,5 +9,8 @@ package com.ctsi.config;
 public class Constant {
 
     //分页条数
-    public static final Integer PAGE_SIZE = 10;
+    public static final Integer PAGE_SIZE = 1;
+
+    //与tb_file_url关联的表名称
+    public static final String FILE_TB_NAME_ACTIVE = "tb_active";
 }

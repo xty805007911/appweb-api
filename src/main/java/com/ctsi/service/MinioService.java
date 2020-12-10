@@ -1,10 +1,13 @@
 package com.ctsi.service;
 
+import com.ctsi.config.MinioProp;
+import com.ctsi.util.UUIDUtil;
 import io.minio.MinioClient;
 import io.minio.ObjectStat;
 import io.minio.PutObjectOptions;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName : MinioService
@@ -32,14 +34,21 @@ public class MinioService {
     private MinioClient minioClient;
     private static final String MINIO_BUCKET = "appweb";
 
+    @Value("${minio.endpoint}")
+    private String minioEndPoint;
+
     //根据文件名获取文件url
     public String getFileUrl(String fileName) throws Exception{
         return minioClient.getObjectUrl(MINIO_BUCKET,fileName);
     }
 
+    //获取前缀
+    public String getFileUrlFont() {
+        return minioEndPoint+MINIO_BUCKET+"/";
+    }
+
 
     //下载文件
-    @RequestMapping("/download/{fileName}")
     public void download(HttpServletResponse response, @PathVariable("fileName") String fileName) {
         InputStream in = null;
         try {
@@ -64,29 +73,45 @@ public class MinioService {
 
 
     //上传文件
-    @RequestMapping("/upload")
-    public String upload(@RequestParam(name = "file", required = false) MultipartFile[] file) {
+    public Map<String,List> upload(@RequestParam(name = "file", required = false) MultipartFile[] file) {
+
+        //realName,uuidName
+        //有序的map
+        Map<String,List> result = new LinkedHashMap<>();
 
         if (file == null || file.length == 0) {
             return null;
         }
 
         List<String> orgfileNameList = new ArrayList<>(file.length);
+        List<String> uuidNameList = new ArrayList<>(file.length);
 
         for (MultipartFile multipartFile : file) {
+            //原始名称
             String orgfileName = multipartFile.getOriginalFilename();
+            //扩展名
+            String extName = orgfileName.substring(orgfileName.lastIndexOf("."));
+            String uuid = UUIDUtil.generateShortUuid();
+
+            //uuidName
+            String uuidName =uuid+extName;
+
             orgfileNameList.add(orgfileName);
+            uuidNameList.add(uuidName);
 
             try {
                 InputStream in = multipartFile.getInputStream();
-                minioClient.putObject(MINIO_BUCKET, orgfileName, in, new PutObjectOptions(in.available(), -1));
+                minioClient.putObject(MINIO_BUCKET, uuidName, in, new PutObjectOptions(in.available(), -1));
                 in.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        return null;
+        result.put("realName",orgfileNameList);
+        result.put("uuidName",uuidNameList);
+
+        return result;
     }
 
     //格式转换

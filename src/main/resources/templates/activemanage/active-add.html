@@ -34,7 +34,7 @@
 
 
 <!--引入左侧菜单栏-->
-<div th:replace="/lefter :: lefterBar(activeUrl='index')"></div>
+<div th:replace="/lefter :: lefterBar(activeUrl='activemanage')"></div>
 
     <!-- main content start-->
 <div class="main-content" >
@@ -64,9 +64,7 @@
                      <div class="col-md-12">
                         <div class="white-box">
                           <h2 class="header-title"> Active add</h2>
-                          
-
-                          <form class="form-horizontal" method="POST" th:action="@{/active/add}">
+                          <form class="form-horizontal" method="POST" th:action="@{/active/add}" enctype="multipart/form-data">
                                 <input th:value="${session.sessionUser.id}" type="hidden" name="createUserId">
                                 <div class="form-group">
                                   <label class="col-md-2 control-label">active name </label>
@@ -133,6 +131,13 @@
                                             <input class="form-control" value="" type="text" name="personNum">
                                             </div>
                                      </div>
+
+                              <div class="form-group">
+                                  <label class="col-md-2 control-label">Activity Image </label>
+                                  <div class="col-md-4">
+                                      <input class="form-control"  type="file" name="file" multiple="multiple">
+                                  </div>
+                              </div>
                                 
                                
                                 <div class="form-group">
