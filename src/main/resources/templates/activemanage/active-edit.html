@@ -131,8 +131,10 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">Activity Image </label>
                                     <div class="col-md-4">
-                                        <!--<input class="form-control"  type="file" name="file" multiple="multiple">-->
-                                         <img th:each="file:${result.active.fileList}" style='width:60px;height:auto;' th:src='${file.url}' alt='' >
+                                        <div th:each="file:${result.active.fileList}" >
+                                            <HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=1>
+                                         <img  style='width:200px;height:auto;' th:src='${file.url}' alt='' ><br/>
+                                        </div> 
                                     </div>
                                 </div>
 

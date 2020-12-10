@@ -48,7 +48,7 @@ public class TbActive implements Serializable {
 
     private Integer type;
 
-    private Integer isHot;
+    private String tag;
 
     @DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
     private Date createTime;

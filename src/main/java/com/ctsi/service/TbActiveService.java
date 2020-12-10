@@ -51,6 +51,7 @@ public class TbActiveService {
         }
 
         wrapper.orderByDesc("create_time");
+        wrapper.eq("enabled",1);
 
         List<TbActive> list = activeMapper.selectList(wrapper);
 
@@ -85,8 +86,77 @@ public class TbActiveService {
         return tbActive;
     }
 
+    //修改
     public void editActive(TbActive active) {
         activeMapper.updateById(active);
+    }
+
+    //设置enabled
+    public void setActiveEnabled(Integer id,Integer enabled) {
+        TbActive tbActive = activeMapper.selectById(id);
+        tbActive.setEnabled(enabled);
+        activeMapper.updateById(tbActive);
+    }
+
+
+    //首页设置：根据tag查询
+    public  List<TbActive> getActiveListByTag(Integer size,String tag) {
+        PageHelper.startPage(1,size);
+        //包装对象
+        QueryWrapper wrapper = new QueryWrapper();
+
+        wrapper.orderByDesc("create_time");
+        wrapper.eq("enabled",1);
+        if(tag != null) {
+            wrapper.like("tag",tag);
+        }
+        List<TbActive> list = activeMapper.selectList(wrapper);
+        //封装图片信息
+        for (TbActive active: list) {
+            List<TbFileUrl> fileUrl = tbFileUrlService.getFileUrlByTbnameAndTbId(Constant.FILE_TB_NAME_ACTIVE, active.getId());
+            if(!CollectionUtils.isEmpty(fileUrl)) {
+                String image = fileUrl.get(0).getUrlFont() + fileUrl.get(0).getUrlEnd();
+                active.setImage(image);
+            }
+        }
+        PageInfo<TbActive> pageInfo = new PageInfo<>(list);
+        return pageInfo.getList();
+    }
+
+    //首页设置：根据最新创建时间查询
+    public  List<TbActive> getActiveListByCreateTimeDesc(Integer size) {
+        PageHelper.startPage(1,size);
+        //包装对象
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.orderByDesc("create_time");
+        wrapper.eq("enabled",1);
+        List<TbActive> list = activeMapper.selectList(wrapper);
+
+        PageInfo<TbActive> pageInfo = new PageInfo<>(list);
+        return pageInfo.getList();
+    }
+
+    //首页设置：根据开始时间查询
+    public  List<TbActive> getActiveListByStartTimeDesc(Integer size) {
+        PageHelper.startPage(1,size);
+        //包装对象
+        QueryWrapper wrapper = new QueryWrapper();
+
+        wrapper.orderByDesc("start_time");
+        wrapper.eq("enabled",1);
+
+        List<TbActive> list = activeMapper.selectList(wrapper);
+        //封装图片信息
+        for (TbActive active: list) {
+            List<TbFileUrl> fileUrl = tbFileUrlService.getFileUrlByTbnameAndTbId(Constant.FILE_TB_NAME_ACTIVE, active.getId());
+            if(!CollectionUtils.isEmpty(fileUrl)) {
+                System.out.println();
+                String image = fileUrl.get(0).getUrlFont() + fileUrl.get(0).getUrlEnd();
+                active.setImage(image);
+            }
+        }
+        PageInfo<TbActive> pageInfo = new PageInfo<>(list);
+        return pageInfo.getList();
     }
 
 }

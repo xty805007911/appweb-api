@@ -32,7 +32,7 @@
 
 
 <!--引入左侧菜单栏-->
-<div th:replace="/lefter :: lefterBar(activeUrl='index')"></div>
+<div th:replace="/lefter :: lefterBar(activeUrl='activemanage')"></div>
 
     <!-- main content start-->
 <div class="main-content" >
@@ -88,8 +88,9 @@
                                   <td>[[${#dates.format(item.startTime, 'MM/dd/yyyy')}]] TO [[${#dates.format(item.endTime, 'MM/dd/yyyy')}]]</td>
                                   <td>[[${#dates.format(item.createTime, 'MM/dd/yyyy HH:mm:ss')}]] </td>
                                   <td>
+                                      <a  class="btn btn-danger round" th:href="@{/active/participant/}+${item.id}">Participant</a>
                                       <a  class="btn btn-primary round" th:href="@{/active/}+${item.id}" >Edit</a>
-                                      <a  class="btn btn-primary danger" th:href="@{/active/delete/}+${item.id}">Delete</a>
+                                      <a  class="btn btn-danger round" th:href="@{/active/delete/}+${item.id}">Delete</a>
                                   </td>
                                 </tr>
                               </tbody>

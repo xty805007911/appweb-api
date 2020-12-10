@@ -1,5 +1,6 @@
 package com.ctsi.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ctsi.entity.TbActive;
 import com.ctsi.entity.TbActiveType;
 import com.ctsi.mapper.TbActiveTypeMapper;
@@ -20,6 +21,8 @@ public class TbActiveTypeService {
 
     //查询所有活动分类
     public List<TbActiveType> getActiveTypeList() {
-        return activeTypeMapper.selectList(null);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("enabled",1);
+        return activeTypeMapper.selectList(queryWrapper);
     }
 }

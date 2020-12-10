@@ -22,5 +22,10 @@ public class TbFileUrl {
     private Integer tbId;
 
     @TableField(exist = false)
-    private String url=urlFont+urlEnd;
+    private String url;
+
+    public String getUrl() {
+        this.url = getUrlFont() + getUrlEnd();
+        return this.url;
+    }
 }

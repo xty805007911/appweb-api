@@ -17,5 +17,7 @@ public class TbActiveType {
     private Integer id;
 
     private String name;
-    private String extra;
+    private String icon;
+
+    private Integer enabled;
 }

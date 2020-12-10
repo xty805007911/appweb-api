@@ -72,130 +72,26 @@
                   <!--Start row-->
                   <div class="row">
                    <!--Start info box-->
-                   <div class="col-md-3 col-sm-6">
-                       <div class="info-box-main">
+                   <div class="col-md-2 col-sm-4" th:each="item:${result.activeTypeList}">
+                       <div class="info-box-main"  ><!--style="width:150px;height:150px;"-->
                           <div class="info-stats">
-                              <p>1250</p>
-                              <span>Total Sales </span>
+                              <p>[[${item.name}]]</p>
+                              <span>150</span>
                           </div>
                           <div class="info-icon text-primary ">
-                              <i class="mdi mdi-cart"></i>
+                              <i th:class="${item.icon}"></i>
                           </div>
-                          <div class="info-box-progress">
-                             <div class="progress">
-                              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100" style="width: 48%;">
-                             </div>
-                          </div>
-                          </div>
+                          <a class="info-stats" th:href="@{/active/activeType/}">ActivityList</a>
                        </div>
                    </div>
                    <!--End info box-->
                    
-                   <!--Start info box-->
-                   <div class="col-md-3 col-sm-6">
-                       <div class="info-box-main">
-                          <div class="info-stats">
-                              <p>2300</p>
-                              <span>Daily visitors</span>
-                          </div>
-                          <div class="info-icon text-info">
-                             <i class="mdi mdi-account-multiple"></i>	
-                          </div>
-                          <div class="info-box-progress">
-                             <div class="progress">
-                              <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100" style="width: 48%;">
-                             </div>
-                          </div>
-                          </div>
-                       </div>
-                   </div>
-                   <!--End info box-->
-                
-                   <!--Start info box-->
-                   <div class="col-md-3 col-sm-6">
-                       <div class="info-box-main">
-                          <div class="info-stats">
-                              <p>5320</p>
-                              <span>Total Earning</span>
-                          </div>
-                          <div class="info-icon text-warning">
-                              <i class="fa fa-dollar"></i>
-                          </div>
-                          <div class="info-box-progress">
-                             <div class="progress">
-                              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100" style="width: 48%;">
-                              </div>
-                          </div>
-                          </div>
-                       </div>
-                   </div>
-                   <!--End info box-->
-                
-                   <!--Start info box-->
-                   <div class="col-md-3 col-sm-6">
-                       <div class="info-box-main">
-                          <div class="info-stats">
-                              <p>65</p>
-                              <span>Pending Orders</span>
-                          </div>
-                          <div class="info-icon text-danger">
-                              <i class="mdi mdi-weight"></i>
-                          </div>
-                          <div class="info-box-progress">
-                             <div class="progress">
-                              <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100" style="width: 48%;">
-                             </div>
-                          </div>
-                          </div>
-                       </div>
-                   </div>
-                   <!--End info box-->
-                
                   </div>
                   <!--End row-->
                   
                              
                   
-                <!--Start row-->  
-                <div class="row">
-                     <div class="col-md-6">
-                         <div class="white-box">
-                         <h2 class="header-title">Sales Analytics</h2>
-                            <ul class="list-inline text-center m-t-10">
-                              <li>
-                                <h5><i class="fa fa-circle m-r-5" style="color:#98C1D1;"></i>Iphone</h5>
-                              </li>
-                              <li>
-                                <h5><i class="fa fa-circle m-r-5" style="color: #23DBDE;"></i>Ipad</h5>
-                              </li>
-                              <li>
-                                <h5><i class="fa fa-circle m-r-5" style="color: #F6DDA0;"></i>Itouch</h5>
-                              </li>
-                            </ul>
-                               <div id="morris-area-chart" style="height:250px;"></div>
-                         </div>
-                     </div>
-                     
-                     
-                  <div class="col-md-6">
-                      <div class="white-box">
-                          <h2 class="header-title">Total Revenue </h2>
-                            <ul class="list-inline text-center m-t-10">
-                              <li>
-                                <h5><i class="fa fa-circle m-r-5" style="color:#03A9F3;"></i>Section A</h5>
-                              </li>
-                              <li>
-                                <h5><i class="fa fa-circle m-r-5" style="color: #FFAA00;"></i>Section B</h5>
-                              </li>
-                            </ul>
-                            <div id="morris2"  style="height:250px;"></div>
-                            
-                      </div>
-                  </div><!-- /col-md-6-->
-
-                     
-                </div>
-                <!--End row-->
+                
                   
                   
                    <!--Start row-->
@@ -403,30 +299,11 @@
                      <div class="white-box">
                        <h2 class="header-title">Latest Activity</h2>
                         <ul class="timeline timeline-compact">
-                          <li class="latest">
-                            <div class="timeline-date">Just Now</div>
-                            <div class="timeline-title">Create New Page</div>
-                            <div class="timeline-description">Lorem Ipsum generators on the tend to repeat.</div>
+                          <li th:class="${itemStat.index==0?'latest':''}" th:each="item:${result.activeListByCreateTimeDesc}">
+                            <div class="timeline-date">[[${#dates.format(item.createTime, 'MM/dd/yyyy')}]]</div>
+                            <div class="timeline-title">[[${item.name}]]</div>
+                            <div class="timeline-description">Cost:$[[${item.cost}]]</div>
                           </li>
-                          
-                          <li>
-                           <div class="timeline-date">Just Now</div>
-                            <div class="timeline-title">Back Up Theme</div>
-                            <div class="timeline-description">Lorem Ipsum generators on the tend to repeat.</div>
-                          </li>
-                          
-                          <li>
-                            <div class="timeline-date">Just Now</div>
-                            <div class="timeline-title">Changes In The Structure</div>
-                            <div class="timeline-description">Lorem Ipsum generators on the tend to repeat. </div>
-                          </li>
-                          
-                          <li>
-                            <div class="timeline-date">Just Now</div>
-                            <div class="timeline-title">New user register</div>
-                            <div class="timeline-description">Lorem Ipsum generators on the tend to repeat.</div>
-                          </li>
-                          
                         </ul>
                      </div>
                  </div>

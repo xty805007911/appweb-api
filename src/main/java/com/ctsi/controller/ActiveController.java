@@ -114,5 +114,20 @@ public class ActiveController {
         return "redirect:/active/"+active.getId();
     }
 
+    //删除活动
+    @RequestMapping("/active/delete/{id}")
+    public String deleteActive(@PathVariable Integer id) {
+        activeService.setActiveEnabled(id,0);
+        return "redirect:/active/pageList";
+    }
+
+    //查询活动参与人
+    @RequestMapping("/active/participant/{id}")
+    public String participantForActive(@PathVariable Integer id) {
+
+
+        return "/active/active-participant";
+    }
+
 
 }
