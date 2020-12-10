@@ -76,7 +76,7 @@ public class TbActiveService {
 
         //查询所有文件
         List<TbFileUrl> fileUrlList = tbFileUrlService.getFileUrlByTbnameAndTbId(Constant.FILE_TB_NAME_ACTIVE, id);
-        tbActive.setFileList(CollectionUtils.isEmpty(fileUrlList)?null:fileUrlList);
+        tbActive.setFileList(fileUrlList);
 
         //查询创建人
         TbUser createUser = userService.getUserById(tbActive.getCreateUserId());

@@ -132,9 +132,7 @@
                                     <label class="col-md-2 control-label">Activity Image </label>
                                     <div class="col-md-4">
                                         <!--<input class="form-control"  type="file" name="file" multiple="multiple">-->
-                                        <div th:if="${item.fileList==null}">
-                                            <img th:each="file:${item.fileList}" style='width:60px;height:auto;' th:src='${file.url}' alt='' >
-                                        </div>
+                                         <img th:each="file:${result.active.fileList}" style='width:60px;height:auto;' th:src='${file.url}' alt='' >
                                     </div>
                                 </div>
 
