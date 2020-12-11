@@ -89,10 +89,6 @@
                   </div>
                   <!--End row-->
                   
-                             
-                  
-                
-                  
                   
                    <!--Start row-->
                    <div class="row">
@@ -100,127 +96,25 @@
                     <!-- Start inbox widget-->
                       <div class="col-md-4">
                         <div class="white-box">
-                          <h2 class="header-title">Inbox</h2>
+                          <h2 class="header-title">Activity Coming</h2>
                             <div class="inbox-widget inbox-scroll-list">
                             
-                                <div class="inbox-inner">
+                                <div class="inbox-inner" th:each="item:${result.activeListByStartTimeDesc}">
                                    <a href="#">
                                     <div class="inbox-item">
                                         <div class="inbox-img">
-                                            <img src="/assets/images/users/avatar-1.jpg" alt="" />
+                                            <img th:src="${item.image}" alt="" />
                                         </div>
                                         
                                         <div class="inbox-item-info">
-                                           <p class="author">John Doe</p>
-                                           <p class="inbox-message">Lorem Ipsum which looks....</p>
-                                           <p class="inbox-date">13:34 PM</p>
+                                           <p class="author">[[${item.name}]]</p>
+                                           <p class="inbox-message" th:utext="${item.desc}"></p>
+                                           <p class="inbox-date">[[${#dates.format(item.startTime, 'MM/dd/yyyy')}]]</p>
                                         </div>
                                     </div>
                                     </a>
                                 </div>
 
-                                <div class="inbox-inner">
-                                   <a href="#">
-                                    <div class="inbox-item">
-                                        <div class="inbox-img">
-                                            <img src="/assets/images/users/avatar-2.jpg" alt="" />
-                                        </div>
-                                        
-                                        <div class="inbox-item-info">
-                                           <p class="author">John Doe</p>
-                                           <p class="inbox-message">Lorem Ipsum which looks....</p>
-                                           <p class="inbox-date">13:34 PM</p>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </div>
-
-
-                                <div class="inbox-inner">
-                                   <a href="#">
-                                    <div class="inbox-item">
-                                        <div class="inbox-img">
-                                            <img src="/assets/images/users/avatar-3.jpg" alt="" />
-                                        </div>
-                                        
-                                        <div class="inbox-item-info">
-                                           <p class="author">John Doe</p>
-                                           <p class="inbox-message">Lorem Ipsum which looks....</p>
-                                           <p class="inbox-date">13:34 PM</p>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </div>
-
-
-                                <div class="inbox-inner">
-                                   <a href="#">
-                                    <div class="inbox-item">
-                                        <div class="inbox-img">
-                                            <img src="/assets/images/users/avatar-4.jpg" alt="" />
-                                        </div>
-                                        
-                                        <div class="inbox-item-info">
-                                           <p class="author">John Doe</p>
-                                           <p class="inbox-message">Lorem Ipsum which looks....</p>
-                                           <p class="inbox-date">13:34 PM</p>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </div>
-
-
-
-                                <div class="inbox-inner">
-                                   <a href="#">
-                                    <div class="inbox-item">
-                                        <div class="inbox-img">
-                                            <img src="/assets/images/users/avatar-5.jpg" alt="" />
-                                        </div>
-                                        
-                                        <div class="inbox-item-info">
-                                           <p class="author">John Doe</p>
-                                           <p class="inbox-message">Lorem Ipsum which looks....</p>
-                                           <p class="inbox-date">13:34 PM</p>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </div>
-
-
-                                <div class="inbox-inner">
-                                   <a href="#">
-                                    <div class="inbox-item">
-                                        <div class="inbox-img">
-                                            <img src="/assets/images/users/avatar-6.jpg" alt="" />
-                                        </div>
-                                        
-                                        <div class="inbox-item-info">
-                                           <p class="author">John Doe</p>
-                                           <p class="inbox-message">Lorem Ipsum which looks....</p>
-                                           <p class="inbox-date">13:34 PM</p>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </div>
-
-                                <div class="inbox-inner">
-                                   <a href="#">
-                                    <div class="inbox-item">
-                                        <div class="inbox-img">
-                                            <img src="/assets/images/users/avatar-3.jpg" alt="" />
-                                        </div>
-                                        
-                                        <div class="inbox-item-info">
-                                           <p class="author">John Doe</p>
-                                           <p class="inbox-message">Lorem Ipsum which looks....</p>
-                                           <p class="inbox-date">13:34 PM</p>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </div>
-                                
-                                
                             </div>    
                         </div>
                        </div>
@@ -229,67 +123,25 @@
                    <!--Start chat widget-->
                    <div class="col-md-4">
                        <div class="white-box">
-                           <h2 class="header-title">Chat</h2>
+                           <h2 class="header-title">Recommend Activity</h2>
                            
                            <div class="chat-widget">
                               <ul  class="chat-scroll-list">
-                                <li class="left">
-                                   <img src="/assets/images/users/avatar-6.jpg" alt="" />
+                                <li th:class="${itemStat.index%2==0?'left':'right'}" th:each="item:${result.recommendActiveList}">
+                                   <img th:src="${item.image}" alt="" />
                                     <div class="chat-info">
-                                       <a class="name" href="#">Jone Doe</a>
-                                       <span class="datetime">6:12</span>
-                                       <span class="message">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit
+                                       <a class="name" href="#"> [[${item.name}]]</a>
+                                       <span class="datetime">[[${#dates.format(item.startTime, 'MM/dd/yyyy')}]]</span>
+                                       <span class="message" th:utext="${item.desc}">
                                         </span>
                                    </div>
                                 </li>
                                 
-                                <li class="right">
-                                   <img src="/assets/images/users/avatar-6.jpg" alt="" />
-                                    <div class="chat-info">
-                                       <a class="name" href="#">Jone Doe</a>
-                                       <span class="datetime">6:12</span>
-                                       <span class="message">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit
-                                        </span>
-                                   </div>
-                                </li>
+                               
                                 
-                                <li class="left">
-                                   <img src="/assets/images/users/avatar-6.jpg" alt="" />
-                                    <div class="chat-info">
-                                       <a class="name" href="#">Jone Doe</a>
-                                       <span class="datetime">6:12</span>
-                                       <span class="message">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit
-                                        </span>
-                                   </div>
-                                </li>
-                                
-                                <li class="right">
-                                   <img src="/assets/images/users/avatar-6.jpg" alt="" />
-                                    <div class="chat-info">
-                                       <a class="name" href="#">Jone Doe</a>
-                                       <span class="datetime">6:12</span>
-                                       <span class="message">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit
-                                        </span>
-                                   </div>
-                                </li>
-                           
                               </ul>
                            </div>
                            
-                       <div class="row">
-                        <div class="col-sm-12">
-                          <div class="input-group">
-                            <input class="form-control" placeholder="Say something" type="text">
-                            <span class="input-group-btn">
-                            <button class="btn btn-primary" type="button">Send</button>
-                            </span> </div>
-                        </div>
-                      </div>
-                      
                        </div>
                    </div>
                    <!--End chat widget-->
@@ -320,18 +172,18 @@
                                   <tr>
                                     <th>#</th>
                                     <th>Project Name</th>
-                                    <th >Start Date</th>
+                                    <th>Start Date</th>
                                     <th>Deadline Date</th>
                                     <th>Status</th>
                                     <th>Progress</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Design new theme</td>
-                                    <td>10/10/2016</td>
-                                    <td>12/11/2016</td>
+                                  <tr th:each="item:${result.hotActiveList}">
+                                    <td>[[${itemStat.index+1}]]</td>
+                                    <td>[[${item.name}]]</td>
+                                    <td>[[${#dates.format(item.createTime, 'MM/dd/yyyy')}]]</td>
+                                    <td>[[${#dates.format(item.endTime, 'MM/dd/yyyy')}]]</td>
                                     <td><span class="label label-warning">Pending</span></td>
                                     <td><div class="progress progress-striped progress-sm">
                                       <div class="progress-bar progress-bar-warning" style="width: 25%;"></div>

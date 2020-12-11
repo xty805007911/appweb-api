@@ -41,17 +41,17 @@ public class IndexController {
         List<TbActiveType> activeTypeList = activeTypeService.getActiveTypeList();
         map.put("activeTypeList",activeTypeList);
 
-        //查询推荐和热门
+        //查询推荐、热门
         List<TbActive> hotActiveList = activeService.getActiveListByTag(10, Constant.ACTIVITY_TAG_HOT);
         List<TbActive> recommendActiveList = activeService.getActiveListByTag(10, Constant.ACTIVITY_TAG_RECOMMEND);
         map.put("hotActiveList",hotActiveList);
         map.put("recommendActiveList",recommendActiveList);
 
         //根据创建时间查询
-        List<TbActive> activeListByCreateTimeDesc = activeService.getActiveListByCreateTimeDesc(4);
+        List<TbActive> activeListByCreateTimeDesc = activeService.getActiveListByCreateTimeDesc(5);
         map.put("activeListByCreateTimeDesc",activeListByCreateTimeDesc);
 
-        //根据开始时间查询
+        //根据开始时间查询（即将到来的）
         List<TbActive> activeListByStartTimeDesc = activeService.getActiveListByStartTimeDesc(10);
         map.put("activeListByStartTimeDesc",activeListByStartTimeDesc);
 

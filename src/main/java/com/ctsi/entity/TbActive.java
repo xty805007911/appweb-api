@@ -42,7 +42,7 @@ public class TbActive implements Serializable {
 
     private Integer personNum;
 
-    private Integer status;
+    private String status;
 
     private Integer enabled;
 
@@ -61,6 +61,7 @@ public class TbActive implements Serializable {
 
     @TableField(exist = false)
     private String image;
+
 
 
 }

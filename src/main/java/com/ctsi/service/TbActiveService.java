@@ -6,6 +6,7 @@ import com.ctsi.entity.TbActive;
 import com.ctsi.entity.TbFileUrl;
 import com.ctsi.entity.TbUser;
 import com.ctsi.mapper.TbActiveMapper;
+import com.ctsi.util.DateUtils;
 import com.ctsi.util.PageResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -31,7 +32,6 @@ public class TbActiveService {
         //填充其他属性
         active.setCreateTime(new Date());
         active.setEnabled(1);
-        active.setStatus(1);
 
         activeMapper.insert(active);
     }
@@ -111,14 +111,38 @@ public class TbActiveService {
             wrapper.like("tag",tag);
         }
         List<TbActive> list = activeMapper.selectList(wrapper);
-        //封装图片信息
+
         for (TbActive active: list) {
+            //封装图片信息
             List<TbFileUrl> fileUrl = tbFileUrlService.getFileUrlByTbnameAndTbId(Constant.FILE_TB_NAME_ACTIVE, active.getId());
             if(!CollectionUtils.isEmpty(fileUrl)) {
                 String image = fileUrl.get(0).getUrlFont() + fileUrl.get(0).getUrlEnd();
                 active.setImage(image);
             }
+
+            //封装日期信息
+            Integer gapDateForStartTime = DateUtils.dateGapBetween(new Date(), active.getStartTime());//开始时间距离今天多久
+            Integer gapDateForEndTime = DateUtils.dateGapBetween(active.getEndTime(), new Date());//今天距离结束时间多久
+
+            //pending，活动马上开始
+            if(gapDateForStartTime <= -3 && gapDateForStartTime >= -1) {
+                active.setStatus(Constant.ACTIVITY_STATUS_PENDING);
+            }
+            // In Progress，活动在进行中
+            if(gapDateForStartTime>=0 && gapDateForEndTime >= 0) {
+                active.setStatus(Constant.ACTIVITY_STATUS_IN_PROGRESS);
+            }
+
+            //已结束
+            if(gapDateForEndTime < 0) {
+                active.setStatus(Constant.ACTIVITY_STATUS_ON_HOLD);
+            }
+
+            System.out.println();
+
         }
+
+
         PageInfo<TbActive> pageInfo = new PageInfo<>(list);
         return pageInfo.getList();
     }
