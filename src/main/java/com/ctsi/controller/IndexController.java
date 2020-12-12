@@ -6,9 +6,13 @@ import com.ctsi.entity.TbActiveType;
 import com.ctsi.service.TbActiveService;
 import com.ctsi.service.TbActiveTypeService;
 import com.ctsi.service.TbUserService;
+import com.ctsi.util.PageResult;
+import com.ctsi.vo.ActivityQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -59,4 +63,34 @@ public class IndexController {
         request.setAttribute("result",map);
         return "/index";
     }
+
+    //首页：查询活动详情
+    @RequestMapping("/index/active/{id}")
+    public String indexActiveDetail(@PathVariable Integer id,HttpServletRequest request) {
+        Map<String,Object> map = new HashMap<>();
+        TbActive active = activeService.getActiveById(id);
+
+        List<TbActiveType> activeTypeList = activeTypeService.getActiveTypeList();
+
+        map.put("active",active);
+        map.put("activeTypeList",activeTypeList);
+
+        request.setAttribute("result",map);
+        return "/index-active-detail";
+    }
+
+    //查询
+    @RequestMapping(value = "/index/active/search")
+    public String search(ActivityQueryVO activityQueryVO,HttpServletRequest request) {
+
+        activityQueryVO.setSize(Constant.PAGE_SIZE);
+
+        PageResult<TbActive> activePageResult = activeService.pageListByKeywords(activityQueryVO);
+
+        request.setAttribute("activityQueryVO",activityQueryVO);
+        request.setAttribute("pageResult",activePageResult);
+
+        return "/index-active-search";
+    }
+
 }

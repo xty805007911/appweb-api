@@ -8,6 +8,7 @@ import com.ctsi.entity.TbUser;
 import com.ctsi.mapper.TbActiveMapper;
 import com.ctsi.util.DateUtils;
 import com.ctsi.util.PageResult;
+import com.ctsi.vo.ActivityQueryVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +107,7 @@ public class TbActiveService {
         QueryWrapper wrapper = new QueryWrapper();
 
         wrapper.orderByDesc("create_time");
+        wrapper.orderByDesc("start_time");
         wrapper.eq("enabled",1);
         if(tag != null) {
             wrapper.like("tag",tag);
@@ -125,7 +127,7 @@ public class TbActiveService {
             Integer gapDateForEndTime = DateUtils.dateGapBetween(active.getEndTime(), new Date());//今天距离结束时间多久
 
             //pending，活动马上开始
-            if(gapDateForStartTime <= -3 && gapDateForStartTime >= -1) {
+            if(gapDateForStartTime <= -1) {
                 active.setStatus(Constant.ACTIVITY_STATUS_PENDING);
             }
             // In Progress，活动在进行中
@@ -134,7 +136,7 @@ public class TbActiveService {
             }
 
             //已结束
-            if(gapDateForEndTime < 0) {
+            if(gapDateForEndTime <= 0) {
                 active.setStatus(Constant.ACTIVITY_STATUS_ON_HOLD);
             }
 
@@ -181,6 +183,18 @@ public class TbActiveService {
         }
         PageInfo<TbActive> pageInfo = new PageInfo<>(list);
         return pageInfo.getList();
+    }
+
+    public PageResult<TbActive> pageListByKeywords(ActivityQueryVO activityQueryVO) {
+        int page = activityQueryVO.getPage() == null || activityQueryVO.getPage() <= 0 ? 1: activityQueryVO.getPage();
+        PageHelper.startPage(page,activityQueryVO.getSize());
+
+        List<TbActive> list = activeMapper.searchByQueryVO(activityQueryVO);
+
+        PageInfo<TbActive> pageInfo = new PageInfo<>(list);
+        PageResult<TbActive> pageResult = new PageResult<>(pageInfo);
+
+        return pageResult;
     }
 
 }

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+  <title>Detail</title>
+
+    <!--Begin  Page Level  CSS -->
+    <link href="/assets/plugins/morris-chart/morris.css" rel="stylesheet">
+    <link href="/assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
+     <!--End  Page Level  CSS -->
+    <link href="/assets/css/icons.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="js/html5shiv.min.js"></script>
+          <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="sticky-header">
+
+
+<!--引入左侧菜单栏-->
+<div th:replace="/lefter :: lefterBar(activeUrl='index')"></div>
+
+    <!-- main content start-->
+<div class="main-content" >
+<div th:replace="/header :: headerBar"></div>
+        <!--body wrapper start-->
+        <div class="wrapper">
+          <!--Start Page Title-->
+           <div class="page-title-box">
+                <h4 class="page-title"></h4>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#"></a>
+                    </li>
+
+                    <li class="active">
+                        
+                    </li>
+                </ol>
+                <div class="clearfix"></div>
+             </div>
+              <!--End Page Title-->
+
+                  <!--Start row-->  
+                <div class="row">
+                        <div class="col-md-12">
+                           <div class="white-box">
+                               <h3><b>[[${result.active.name}]]</b> <span class="pull-right">[[${result.active.code==''?result.active.id:result.active.code}]]</span></h3>
+                               <hr>
+                         <div class="row">
+                           <div class="col-md-12">
+                             <div class="pull-left">
+                              
+                               <p class="text-muted m-l-20" th:utext="${result.active.desc}">
+                               </p>
+                               <div  >
+                                 <img th:each="file:${result.active.fileList}"  style='width:200px;height:auto;' th:src='${file.url}' alt='' >
+                                 <HR style="border:1 dashed #987cb9" width="80%" color=#987cb9 SIZE=1>
+                                </div> 
+                             </div>
+
+                             
+                           </div>
+                           <div class="col-md-12">
+                             <div class="table-responsive m-t-40">
+                               <table class="table table-hover">
+                                 <thead>
+                                   <tr>
+                                     <th class="text-center">#</th>
+                                     <th>Activity Name</th>
+                                     <th class="text-right">Date</th>
+                                     <th class="text-right">Unit Cost</th>
+                                     <th class="text-right">Total</th>
+                                   </tr>
+                                 </thead>
+                                 <tbody>
+                                   <tr>
+                                     <td class="text-center">1</td>
+                                     <td>[[${result.active.name}]]</td>
+                                     <td class="text-right">
+                                         [[${#dates.format(result.active.startTime, 'MM/dd/yyyy')}]] 
+                                         TO
+                                         [[${#dates.format(result.active.endTime, 'MM/dd/yyyy')}]]
+                                    </td>
+                                     <td class="text-right"> $12 </td>
+                                     <td class="text-right"> $36</td>
+                                   </tr>
+                                 </tbody>
+                               </table>
+                             </div>
+                           </div>
+                           <div class="col-md-12">
+                             <div class="pull-right m-t-30 text-right">
+                               <p>Sub - Total amount: $[[${result.active.cost}]]</p>
+                               <p>Tax : N/A </p>
+                               <hr>
+                               <h3><b>Total :</b> $[[${result.active.cost}]]</h3>
+                             </div>
+                             <div class="clearfix"></div>
+                             <hr>
+                             <div class="text-right">
+                               <button class="btn btn-primary" type="submit"> Proceed to payment </button>
+                               <button onClick="javascript:window.print();" class="btn btn-warning btn-outline" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
+                             </div>
+                           </div>
+                         </div>
+               </div>
+                         </div>
+                     </div>
+                     <!--End row-->
+			    </div>
+        <!-- End Wrapper-->
+
+
+        <!--Start  Footer -->
+        <div th:replace="/footer :: footerBar"></div>
+         <!--End footer -->
+
+       </div>
+      <!--End main content -->
+
+
+
+    <!--Begin core plugin -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/plugins/moment/moment.js"></script>
+    <script  src="/assets/js/jquery.slimscroll.js "></script>
+    <script src="/assets/js/jquery.nicescroll.js"></script>
+    <script src="/assets/js/functions.js"></script>
+    <!-- End core plugin -->
+
+    <!--Begin Page Level Plugin-->
+	<script src="/assets/plugins/morris-chart/morris.js"></script>
+    <script src="/assets/plugins/morris-chart/raphael-min.js"></script>
+    <script src="/assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="/assets/pages/dashboard.js"></script>
+    <!--End Page Level Plugin-->
+
+
+</body>
+
+</html>

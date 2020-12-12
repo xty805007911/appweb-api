@@ -45,14 +45,14 @@
               
           <!--Start Page Title-->
            <div class="page-title-box">
-                <h4 class="page-title">Dashboard1 </h4>
+                <h4 class="page-title">Activity Project </h4>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="#">Dashboard</a>
+                        <a href="#"></a>
                     </li>
                     
                     <li class="active">
-                        Dashboard 1
+                         
                     </li>
                 </ol>
                 <div class="clearfix"></div>
@@ -72,7 +72,7 @@
                   <!--Start row-->
                   <div class="row">
                    <!--Start info box-->
-                   <div class="col-md-2 col-sm-4" th:each="item:${result.activeTypeList}">
+                   <div class="col-md-6 col-sm-2" th:each="item:${result.activeTypeList}">
                        <div class="info-box-main"  ><!--style="width:150px;height:150px;"-->
                           <div class="info-stats">
                               <p>[[${item.name}]]</p>
@@ -152,8 +152,14 @@
                        <h2 class="header-title">Latest Activity</h2>
                         <ul class="timeline timeline-compact">
                           <li th:class="${itemStat.index==0?'latest':''}" th:each="item:${result.activeListByCreateTimeDesc}">
-                            <div class="timeline-date">[[${#dates.format(item.createTime, 'MM/dd/yyyy')}]]</div>
-                            <div class="timeline-title">[[${item.name}]]</div>
+                            <div class="timeline-date">
+                                [[${#dates.format(item.createTime, 'MM/dd/yyyy')}]]
+                            </div>
+                            <div class="timeline-title">
+                                    <a th:href="@{/index/active/}+${item.id}">
+                                [[${item.name}]]
+                                </a>
+                            </div>
                             <div class="timeline-description">Cost:$[[${item.cost}]]</div>
                           </li>
                         </ul>
@@ -182,82 +188,16 @@
                                   <tr th:each="item:${result.hotActiveList}">
                                     <td>[[${itemStat.index+1}]]</td>
                                     <td>[[${item.name}]]</td>
-                                    <td>[[${#dates.format(item.createTime, 'MM/dd/yyyy')}]]</td>
+                                    <td>[[${#dates.format(item.startTime, 'MM/dd/yyyy')}]]</td>
                                     <td>[[${#dates.format(item.endTime, 'MM/dd/yyyy')}]]</td>
-                                    <td><span class="label label-warning">Pending</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-warning" style="width: 25%;"></div>
-                                    </div></td>
-                                  </tr>
-                                  <tr>
-                                    <td>2</td>
-                                    <td>Website Redesign</td>
-                                    <td>10/10/2016</td>
-                                   <td>12/11/2016</td>
-                                    <td><span class="label label-success">In Progress</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-success" style="width: 25%;"></div>
-                                    </div></td>
-                                  </tr>
-                                  <tr>
-                                    <td>3</td>
-                                    <td>Mockup Design</td>
-                                     <td>10/10/2016</td>
-                                     <td>12/11/2016</td>
-                                    <td><span class="label label-warning">Pending</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-primary" style="width: 25%;"></div>
-                                    </div></td>
-                                  </tr>
-                                  <tr>
-                                    <td>4</td>
-                                    <td>Admin Panel design</td>
-                                    <td>10/10/2016</td>
-                                    <td>12/11/2016</td>
-                                    <td><span class="label label-success">In Progress</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-success" style="width: 25%;"></div>
-                                    </div></td>
-                                  </tr>
-                                  <tr>
-                                    <td>5</td>
-                                    <td>Front End Design</td>
-                                    <td>10/10/2016</td>
-                                    <td>12/11/2016</td>
-                                    <td><span class="label label-danger">On Hold</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-danger" style="width: 25%;"></div>
-                                    </div></td>
-                                  </tr>
-                                  <tr>
-                                    <td>6</td>
-                                    <td>Software Testing</td>
-                                    <td>10/10/2016</td>
-                                    <td>12/11/2016</td>
-                                    <td><span class="label label-success">In Progress</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-success" style="width: 25%;"></div>
-                                    </div></td>
-                                  </tr>
-                                  <tr>
-                                    <td>7</td>
-                                    <td>Admin Panel design</td>
-                                    <td>10/10/2016</td>
-                                    <td>12/11/2016</td>
-                                    <td><span class="label label-danger">On Hold</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-danger" style="width: 25%;"></div>
-                                    </div></td>
-                                  </tr>
-                                  <tr>
-                                    <td>8</td>
-                                    <td>Website Redesign</td>
-                                    <td>10/10/2016</td>
-                                    <td>12/11/2016</td>
-                                    <td><span class="label label-warning">Pending</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-warning" style="width: 25%;"></div>
-                                    </div></td>
+                                    <td>
+                                        <span th:if="${item.status=='Pending'}" class="label label-warning">Pending</span>
+                                        <span th:if="${item.status=='In Progress'}" class="label label-success">In Progres</span>
+                                        <span th:if="${item.status=='On Hold'}" class="label label-danger">On Hold</span>
+                                    </td>
+                                    <td>
+                                      <a class="btn btn-primary round" th:href="@{/active/}+${item.id}">Join</a>
+                                    </td>
                                   </tr>
                                 </tbody>
                               </table>

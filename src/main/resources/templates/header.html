@@ -7,11 +7,10 @@
 <body>
       <!-- header section start-->
         <div class="header-section" th:fragment="headerBar">
-
             <a class="toggle-btn"><i class="fa fa-bars"></i></a>
-
-            <form class="searchform">
-                <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
+            <form class="searchform" method="POST" th:action="@{/index/active/search}" >
+                <input type="text" class="form-control" name="keywords" placeholder="Search here..." />
+                <input type="submit" class="btn btn-primary round" value="Search">
             </form>
 
             <!--notification menu start -->
@@ -45,7 +44,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-                          <li> <a href="#"> <i class="fa fa-wrench"></i> Settings </a> </li>
+                          <li> <a th:href="@{/index/active/search}"> <i class="fa fa-wrench"></i> To Search </a> </li>
                           <li> <a href="#"> <i class="fa fa-user"></i> Profile </a> </li>
                           <li> <a th:href="@{/user/logout}"> <i class="fa fa-lock"></i> Logout </a> </li>
                         </ul>
