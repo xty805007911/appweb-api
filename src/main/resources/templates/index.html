@@ -81,7 +81,7 @@
                           <div class="info-icon text-primary ">
                               <i th:class="${item.icon}"></i>
                           </div>
-                          <a class="info-stats" th:href="@{/active/activeType/}">ActivityList</a>
+                          <a class="info-stats" th:href="@{/index/active/search?activeTypeId=}+${item.id}">ActivityList</a>
                        </div>
                    </div>
                    <!--End info box-->
@@ -171,7 +171,7 @@
                      <!-- Start inbox widget-->
                      <div class="col-md-12">
                         <div class="white-box">
-                          <h2 class="header-title"> Projects </h2>
+                          <h2 class="header-title"> Hot Projects </h2>
                             <div class="table-responsive">
                               <table class="table table-hover">
                                 <thead>

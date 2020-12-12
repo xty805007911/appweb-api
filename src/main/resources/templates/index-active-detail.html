@@ -113,7 +113,8 @@
                              <div class="clearfix"></div>
                              <hr>
                              <div class="text-right">
-                               <button class="btn btn-primary" type="submit"> Proceed to payment </button>
+                               <button th:if="${session.sessionUser!=null}" class="btn btn-primary" type="submit"> Proceed to payment </button>
+                               <span th:if="${session.sessionUser==null}"></span>
                                <button onClick="javascript:window.print();" class="btn btn-warning btn-outline" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
                              </div>
                            </div>

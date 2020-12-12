@@ -186,8 +186,19 @@ public class TbActiveService {
     }
 
     public PageResult<TbActive> pageListByKeywords(ActivityQueryVO activityQueryVO) {
+
         int page = activityQueryVO.getPage() == null || activityQueryVO.getPage() <= 0 ? 1: activityQueryVO.getPage();
         PageHelper.startPage(page,activityQueryVO.getSize());
+
+        if(activityQueryVO.getActiveTypeId() != null) {
+            QueryWrapper queryWrapper = new QueryWrapper();
+            queryWrapper.eq("type",activityQueryVO.getActiveTypeId());
+            queryWrapper.orderByDesc("create_time");
+            PageInfo<TbActive> pageInfo = new PageInfo<>(activeMapper.selectList(queryWrapper));
+            PageResult<TbActive> pageResult = new PageResult<>(pageInfo);
+
+            return pageResult;
+        }
 
         List<TbActive> list = activeMapper.searchByQueryVO(activityQueryVO);
 

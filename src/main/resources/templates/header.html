@@ -9,7 +9,7 @@
         <div class="header-section" th:fragment="headerBar">
             <a class="toggle-btn"><i class="fa fa-bars"></i></a>
             <form class="searchform" method="POST" th:action="@{/index/active/search}" >
-                <input type="text" class="form-control" name="keywords" placeholder="Search here..." />
+                <input th:value="${activityQueryVO==null?'':activityQueryVO.keywords}" type="text" class="form-control" name="keywords" placeholder="Search here..." />
                 <input type="submit" class="btn btn-primary round" value="Search">
             </form>
 

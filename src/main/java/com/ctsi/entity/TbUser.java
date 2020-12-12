@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName : TbUser
@@ -27,6 +28,14 @@ public class TbUser {
     private Integer enabled;
     private String avatar;
 
+    //个人档案
+    private String mentalIllness;
+    private String physicalIllness;
+
     @TableField(exist = false)
     private String token;
+
+    //一个用户对多个活动
+    @TableField(exist = false)
+    private List<TbActive> activeList;
 }

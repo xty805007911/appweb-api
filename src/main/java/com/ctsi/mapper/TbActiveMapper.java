@@ -19,7 +19,7 @@ import java.util.List;
 public interface TbActiveMapper extends BaseMapper<TbActive> {
 
     // 条件查询
-    @Select("SELECT * FROM tb_active WHERE `NAME` LIKE CONCAT('%',#{keywords},'%') OR `DESC` LIKE CONCAT('%',#{keywords},'%') OR cost LIKE CONCAT('%',#{keywords},'%')")
+    @Select("SELECT * FROM tb_active WHERE `NAME` LIKE CONCAT('%',#{keywords},'%') OR `DESC` LIKE CONCAT('%',#{keywords},'%') OR cost LIKE CONCAT('%',#{keywords},'%') ORDER BY create_time DESC")
     public List<TbActive> searchByQueryVO(ActivityQueryVO activityQueryVO);
 
 }
