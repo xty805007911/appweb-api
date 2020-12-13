@@ -13,6 +13,7 @@ public class Constant {
 
     //与tb_file_url关联的表名称
     public static final String FILE_TB_NAME_ACTIVE = "tb_active";
+    public static final String FILE_TB_NAME_USER = "tb_user";
 
     //活动标签tag
     public static final String ACTIVITY_TAG_HOT = "hot";//热门

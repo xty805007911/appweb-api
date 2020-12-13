@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="icon" href="/assets/images/favicon.png" type="image/png">
-  <title>活动首页</title>
+  <title>Activity Index</title>
 
     <!--Begin  Page Level  CSS -->
     <link href="/assets/plugins/morris-chart/morris.css" rel="stylesheet">
@@ -100,7 +100,7 @@
                             <div class="inbox-widget inbox-scroll-list">
                             
                                 <div class="inbox-inner" th:each="item:${result.activeListByStartTimeDesc}">
-                                   <a href="#">
+                                   <a th:href="@{/index/active/}+${item.id}">
                                     <div class="inbox-item">
                                         <div class="inbox-img">
                                             <img th:src="${item.image}" alt="" />
@@ -130,7 +130,7 @@
                                 <li th:class="${itemStat.index%2==0?'left':'right'}" th:each="item:${result.recommendActiveList}">
                                    <img th:src="${item.image}" alt="" />
                                     <div class="chat-info">
-                                       <a class="name" href="#"> [[${item.name}]]</a>
+                                            <a class="name" th:href="@{/index/active/}+${item.id}"> [[${item.name}]]</a>
                                        <span class="datetime">[[${#dates.format(item.startTime, 'MM/dd/yyyy')}]]</span>
                                        <span class="message" th:utext="${item.desc}">
                                         </span>
@@ -196,7 +196,7 @@
                                         <span th:if="${item.status=='On Hold'}" class="label label-danger">On Hold</span>
                                     </td>
                                     <td>
-                                      <a class="btn btn-primary round" th:href="@{/active/}+${item.id}">Join</a>
+                                      <a class="btn btn-primary round" th:href="@{/index/active/}+${item.id}">Join</a>
                                     </td>
                                   </tr>
                                 </tbody>

@@ -88,7 +88,7 @@
                                   <td>[[${#dates.format(item.startTime, 'MM/dd/yyyy')}]] TO [[${#dates.format(item.endTime, 'MM/dd/yyyy')}]]</td>
                                   <td>[[${#dates.format(item.createTime, 'MM/dd/yyyy HH:mm:ss')}]] </td>
                                   <td>
-                                      <a  class="btn btn-danger round" th:href="@{/active/participant/}+${item.id}">Participant</a>
+                                      <a  class="btn btn-success round" th:href="@{/active/participant/}+${item.id}">Participant</a>
                                       <a  class="btn btn-primary round" th:href="@{/active/}+${item.id}" >Edit</a>
                                       <a  class="btn btn-danger round" th:href="@{/active/delete/}+${item.id}">Delete</a>
                                   </td>

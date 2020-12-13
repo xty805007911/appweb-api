@@ -7,12 +7,12 @@
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
   <title></title>
-   <link href="assets/css/icons.css" rel="stylesheet">
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/responsive.css" rel="stylesheet">
+   <link href="/assets/css/icons.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/responsive.css" rel="stylesheet">
     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,29 +34,50 @@
                    <div class="login-inner">
                        
                        <div class="logo">
-                         <img src="assets/images/logo-dark.png"  alt="logo"/>
+                         <img src="/assets/images/logo-dark.png"  alt="logo"/>
                        </div>
-                   		
+                           
+                       <h2 class="header-title text-center" style="color:red">[[${msg}]]</h2>
                    		<h2 class="header-title text-center">Sign Up</h2>
                         
-                       <form>
+                       <form th:action="@{/register}" method="POST" enctype="multipart/form-data">
                            <div class="form-group">
-                               <input type="text" class="form-control"  placeholder="Email" >
+                               <input type="text" class="form-control"  placeholder="Mobile" name="mobile">
                            </div>
                            
                            <div class="form-group">
-                               <input type="text" class="form-control"  placeholder="Username" >
+                               <input type="text" class="form-control"  placeholder="Username" name="username" >
                            </div>
 
                            <div class="form-group">
-                               <input type="text" class="form-control"  placeholder="Password" >
+                                <input type="text" class="form-control"  placeholder="Realname" name="realname">
+                            </div>
+
+                           <div class="form-group">
+                               <input type="text" class="form-control"  placeholder="Password" name="password">
                            </div>
+
+                           <div class="form-group">
+                                <input type="text" class="form-control"  placeholder="Address" name="address">
+                            </div>
+
+                            <div class="form-group">
+                                Gender:
+                                <select name="gender">
+                                    <option value="1">Man</option>
+                                    <option value="0">WoMan</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                    Avatar:<input class="form-control"  type="file" name="file" multiple="multiple" placeholder="Avatar">
+                            </div>
 
 						<div class="form-group">
                            <div class="pull-left">
                                <div class="checkbox primary">
                               <input  id="checkbox-1" type="checkbox">
-                              <label for="checkbox-1">I accept <a href="#">Terms and Conditions</a></label>
+                              <label for="checkbox-1">Is it an activity provider</label>
                             </div>
                            </div>
                          </div>
@@ -66,13 +87,13 @@
                            </div>
                            
                            <div class="form-group text-center">
-                            Already have an account?  <a href="login.html">Sign In </a>
+                            Already have an account?  <a th:href="@{/toLogin}">Sign In </a>
                            </div>
                            
                        </form>
                        
                         <div class="copy-text"> 
-                         <p class="m-0">2017 &copy; Meter admin</p>
+                         <p class="m-0">2020 &copy;</p>
                         </div>
                     
                    </div>
@@ -87,12 +108,12 @@
 
 
     <!--Begin core plugin -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/plugins/moment/moment.js"></script>
-    <script  src="assets/js/jquery.slimscroll.js "></script>
-    <script src="assets/js/jquery.nicescroll.js"></script>
-    <script src="assets/js/functions.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/plugins/moment/moment.js"></script>
+    <script  src="/assets/js/jquery.slimscroll.js "></script>
+    <script src="/assets/js/jquery.nicescroll.js"></script>
+    <script src="/assets/js/functions.js"></script>
     <!-- End core plugin -->
        
 

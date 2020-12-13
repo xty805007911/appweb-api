@@ -1,16 +1,22 @@
 package com.ctsi.controller;
 
+import com.ctsi.config.Constant;
+import com.ctsi.entity.TbFileUrl;
 import com.ctsi.entity.TbUser;
+import com.ctsi.service.MinioService;
+import com.ctsi.service.TbFileUrlService;
 import com.ctsi.service.TbUserService;
 import com.ctsi.util.CookieUtils;
 import com.ctsi.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,17 +30,85 @@ public class CommonController {
 
     @Autowired
     TbUserService userService;
-
-
+    @Autowired
+    MinioService minioService;
+    @Autowired
+    TbFileUrlService fileUrlService;
 
     //登录页跳转
     @RequestMapping("/toLogin")
     public String login(HttpServletRequest request) {
         Map<String,Object> map = new HashMap<>();
-        map.put("error","");
+        map.put("msg","");
         request.setAttribute("result",map);
         return "/login";
     }
+
+    // 去注册页面
+    @RequestMapping("/toRegister")
+    public String toRegister() {
+
+        return "/register";
+    }
+
+    //注册
+    @RequestMapping("/register")
+    public String register(TbUser formUser, MultipartFile[] file,HttpServletRequest request) {
+
+        if(formUser.getMobile() == null || formUser.getMobile().trim().equals("")) {
+            request.setAttribute("msg","The cell phone number cannot be empty");
+            return "/register";
+        }
+        if(formUser.getPassword() == null || formUser.getPassword().trim().equals("")) {
+            request.setAttribute("msg","The password cannot be empty");
+            return "/register";
+        }
+        if(formUser.getRealname() == null || formUser.getRealname().trim().equals("")) {
+            request.setAttribute("msg","The real name cannot be empty");
+            return "/register";
+        }
+        if(userService.isUserExistByMobile(formUser.getMobile())) {
+            request.setAttribute("msg","The phone number has been registered");
+            return "/register";
+        }
+
+        userService.saveUser(formUser);
+
+        System.out.println(file[0].getSize());
+
+        //文件为空，设置默认头像
+        if(file == null || file.length == 0 || file[0].getSize()==0) {
+            TbFileUrl fileUrl = new TbFileUrl();
+            fileUrl.setTbId(formUser.getId());
+            fileUrl.setTbname(Constant.FILE_TB_NAME_USER);
+            fileUrl.setUrlFont(minioService.getFileUrlFont());
+            fileUrl.setUrlEnd("default.gif");
+            fileUrlService.save(fileUrl);
+        }else {
+            //如果选择文件，执行以下逻辑
+            Map<String, List> fileNameMap = minioService.upload(file);//名称
+            List<String> realName = fileNameMap.get("realName");
+            List<String> uuidName = fileNameMap.get("uuidName");
+
+            String fileUrlFont = minioService.getFileUrlFont();
+
+            int index = 0;
+            for(String name : uuidName) {
+                TbFileUrl fileUrl = new TbFileUrl();
+                fileUrl.setTbId(formUser.getId());
+                fileUrl.setTbname(Constant.FILE_TB_NAME_USER);
+                fileUrl.setUrlFont(fileUrlFont);
+                fileUrl.setUrlEnd(name);
+                fileUrl.setRealName(realName.get(index));
+                fileUrlService.save(fileUrl);
+                index++;
+            }
+        }
+
+
+        return "redirect:/toLogin";
+    }
+
     //用户登录
     @RequestMapping("/user/login")
     public String userLogin(HttpServletRequest request, HttpSession session, TbUser formUser) {
@@ -45,6 +119,8 @@ public class CommonController {
             request.setAttribute("result",map);
             return "/login";
         }
+
+        user.setAvatar(userService.getUserAvatar(user.getId()));
 
         session.setAttribute("sessionUser",user);
         return "redirect:/";

@@ -27,7 +27,7 @@
                         <ul class="dropdown-list normal-list">
 						 <li class="message-list message-scroll-list">
                           <a href="#">
-                              <span class="photo"> <img src="/assets/images/users/avatar-8.jpg" class="img-circle" alt="img"></span>
+                              <span class="photo"> <img th:src="${session.sessionUser.avatar}" class="img-circle" alt="img"></span>
                               <span class="subject">John Doe</span>
                               <span class="message"> New tasks needs to be done</span>
                                <span class="time">15 minutes ago</span>
@@ -39,8 +39,8 @@
                     </li>
                     <li>
                         <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <img src="/assets/images/users/avatar-6.jpg" alt="" />
-                            John Doe
+                            <img th:src="${session.sessionUser.avatar}" class="img-circle" alt="img">
+                            [[${session.sessionUser.realname}]]
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-usermenu pull-right">

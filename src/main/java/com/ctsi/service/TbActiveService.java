@@ -2,12 +2,10 @@ package com.ctsi.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ctsi.config.Constant;
-import com.ctsi.entity.TbActive;
-import com.ctsi.entity.TbActiveUser;
-import com.ctsi.entity.TbFileUrl;
-import com.ctsi.entity.TbUser;
+import com.ctsi.entity.*;
 import com.ctsi.mapper.TbActiveMapper;
 import com.ctsi.mapper.TbActiveUserMapper;
+import com.ctsi.mapper.TbActiveUserRecordMapper;
 import com.ctsi.mapper.TbUserMapper;
 import com.ctsi.util.DateUtils;
 import com.ctsi.util.PageResult;
@@ -35,6 +33,8 @@ public class TbActiveService {
     TbUserService userService;
     @Autowired
     TbUserMapper userMapper;
+    @Autowired
+    TbActiveUserRecordMapper activeUserRecordMapper;
 
     //添加活动
     public void add(TbActive active) {
@@ -238,6 +238,11 @@ public class TbActiveService {
         PageInfo<TbUser> pageInfo = new PageInfo<>(userList);
         PageResult<TbUser> pageResult = new PageResult<>(pageInfo);
         return pageResult;
+    }
+
+    //添加一条活动记录
+    public void addActiveUserRecord(TbActiveUserRecord activeUserRecord) {
+        activeUserRecordMapper.insert(activeUserRecord);
     }
 
 }

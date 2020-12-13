@@ -51,6 +51,15 @@ public class TbActiveUserService {
         return true;
     }
 
+    //根据userid和activeid查询
+    public TbActiveUser selectActiveUserByUserIdAndActiveId(Integer userId,Integer activeId) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("active_id",activeId);
+        return activeUserMapper.selectOne(queryWrapper);
+    }
+
+
     //保存用户-活动信息
     public TbActiveUser save(Integer userId,Integer activeId) {
         //先查询该用户是否在活动中，如果在，则直接返回
@@ -67,15 +76,20 @@ public class TbActiveUserService {
         activeUser.setUserId(userId);
         activeUser.setActiveId(activeId);
         activeUser.setEnabled(1);
+        activeUser.setCreateTime(new Date());
         activeUserMapper.insert(activeUser);
         return activeUser;
     }
 
     //根据用户查询所有的活动
-    public List<TbActive> selectActiveListByUser(Integer userId) {
+    //如果activeId == null 则查询所有活动
+    public List<TbActive> selectActiveListByUser(Integer userId,Integer activeId) {
         QueryWrapper<TbActiveUser> activeUserQueryWrapper = new QueryWrapper<>();
         activeUserQueryWrapper.eq("user_id",userId);
         activeUserQueryWrapper.eq("enabled",1);
+        if(activeId != null) {
+            activeUserQueryWrapper.eq("active_id",activeId);
+        }
         List<TbActiveUser> activeUserList = activeUserMapper.selectList(activeUserQueryWrapper);
 
         List<Integer> activeIdList = new ArrayList<>();
@@ -86,11 +100,10 @@ public class TbActiveUserService {
         }
 
         //查询所有的活动
-        List<TbActive> activeList = activeMapper.selectBatchIds(activeIdList);
-
-        //根据所有的active-user查询活动记录
-        List<TbActiveUserRecord> activeUserRecordList = activeUserRecordMapper.selectBatchIds(activeIdList);
-
+        List<TbActive> activeList = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(activeIdList)) {
+            activeList = activeMapper.selectBatchIds(activeIdList);
+        }
         for (TbActive active: activeList) {
             //封装图片信息
             List<TbFileUrl> fileUrl = fileUrlService.getFileUrlByTbnameAndTbId(Constant.FILE_TB_NAME_ACTIVE, active.getId());
@@ -99,12 +112,38 @@ public class TbActiveUserService {
                 active.setImage(image);
             }
 
+            //根据所有的active-user查询活动记录
+            QueryWrapper<TbActiveUserRecord> recordQueryWrapper = new QueryWrapper<>();
+
+            recordQueryWrapper.eq("active_id",active.getId());
+            recordQueryWrapper.eq("user_id",userId);
+            List<TbActiveUserRecord> activeUserRecordList = activeUserRecordMapper.selectList(recordQueryWrapper);
             active.setActiveUserRecordList(activeUserRecordList);
         }
 
-
-
         return activeList;
+    }
+
+
+    public TbActiveUserRecord saveActiveUserRecord(Integer activeUserId,String content,Integer ratings) {
+        //先查询active-user，在插入
+        TbActiveUser activeUser = activeUserMapper.selectById(activeUserId);
+
+        TbActiveUserRecord record = new TbActiveUserRecord();
+
+        record.setActiveId(activeUser.getActiveId());
+        record.setActiveUserId(activeUserId);
+        record.setUserId(activeUser.getUserId());
+
+        record.setContent(content);
+        record.setRatings(ratings);
+
+        record.setCreateTime(new Date());
+
+        activeUserRecordMapper.insert(record);
+
+        return record;
+
     }
 
 }

@@ -38,7 +38,7 @@
                        </div>
                    		
                    		<h2 class="header-title text-center">Login</h2>
-                        <h4  class="header-title text-center">[[${result.error}]] </h4>
+                        <h4  class="header-title text-center" style="color:red">[[${result.msg}]] </h4>
                        <form action="/user/login" method="post">
                            <div class="form-group">
                                <input type="text" class="form-control"  placeholder="mobile" name="mobile">
@@ -62,7 +62,7 @@
                            </div>
                            
                            <div class="form-group text-center">
-                            Don't have an account?  <a href="registration.html">Sign Up </a>
+                            Don't have an account?  <a th:href="@{/toRegister}">Sign Up </a>
                            </div>
                            
                        </form>

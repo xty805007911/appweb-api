@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @Description:
  * @Author: Tianyu Xiao
@@ -19,5 +21,6 @@ public class TbActiveUserRecord {
     private Integer userId;
     private Integer ratings;
     private String content;
+    private Date createTime;
 
 }

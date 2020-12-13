@@ -127,6 +127,7 @@ public class ActiveController {
     public String participantForActive(HttpServletRequest request,@PathVariable Integer id,Integer page) {
         PageResult<TbUser> pageResult = activeService.selectPageUserListByActiveId(id, page, Constant.PAGE_SIZE);
         request.setAttribute("pageResult",pageResult);
+        request.setAttribute("activeId",id);
         return "/activemanage/active-participant";
     }
 

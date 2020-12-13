@@ -83,7 +83,7 @@
                      <ul>
                      
                         <li>
-                           <h4>5</h4>
+                           <h4>[[${#lists.size(activeList)}]]</h4>
                            <p>All Activity</p>
                         </li>
                         
@@ -102,46 +102,40 @@
 
 <!--Start row-->
 <div class="row">
- <div class="col-md-8">
+        <div class="col-md-8">
                      
-     <div class="white-box" th:each="active:${activeList}">
-         <div class="post-header">
-         <div class="post-author-media">
-             <img th:src="${active.image}"  alt="">
-         </div>
-         
-         <div class="post-author">
-           <h4>[[${active.name}]]</h4>
-           <p>2 hours ago</p>
-         </div>
-         </div> <!-- /.post-header-->
-         
-         <div class="post-desc">
-             <p th:utext="${active.desc}"></p>
-         </div>
-         
-        
-        <div class="timeline-comment">
-            <img src="/assets/images/profile-picture.png"  alt="">
-            <span>Jonathan Doe <small class="text-light">2 hours ago</small></span>
-            <div class="comment-text">
-                <p> Epicurei intellegat nec ei. Sed id doctus insolens pericula, sea suas nostrud accusamus.</p>
-            </div>
-        </div> <!--/.timeline-comment-->
-        
-        <div class="timeline-comment">
-            <img src="/assets/images/profile-picture.png"  alt="">
-            <span>Jonathan Doe <small class="text-light">2 hours ago</small></span>
-            <div class="comment-text">
-                <p> Epicurei intellegat nec ei. Sed id doctus insolens pericula, sea suas nostrud accusamus.</p>
-            </div>
-        </div> <!--/.timeline-comment-->
-        
-         <textarea class="form-control" placeholder="Replay"></textarea>
-         
-     </div><!-- /.white-box-->
-     
- </div> <!--/.col-md-8-->
+                <div class="white-box" th:each="active:${activeList}">
+                    <div class="post-header">
+                    <div class="post-author-media">
+                        <img th:src="${active.image}"  alt="">
+                    </div>
+                    
+                    <div class="post-author">
+                      <h4>[[${active.name}]]</h4>
+                      <p>2 hours ago</p>
+                    </div>
+                    </div> <!-- /.post-header-->
+                    
+                    <div class="post-desc">
+                        <p th:utext="${active.desc}"></p>
+                    </div>
+                    
+                   
+                   <div class="timeline-comment" th:each="record:${active.activeUserRecordList}">
+                       <span> （[[${recordStat.index+1}]]）<small class="text-light">[[${record.createTime}]]</small></span><br/><br/>
+                               Ratings:<div class="progress progress-striped progress-sm" style="width: 150px;">
+                                       <div th:if="${record.ratings} > 80" class="progress-bar progress-bar-success" th:style="'width: '+${record.ratings}+'%;'"></div>
+                                       <div th:if="${record.ratings <= 80 && record.ratings >=60}" class="progress-bar progress-bar-warning" th:style="'width: '+${record.ratings}+'%;'"></div>
+                                       <div th:if="${record.ratings} < 60"class="progress-bar progress-bar-danger" th:style="'width: '+${record.ratings}+'%;'"></div>
+                                     </div>
+                       <div class="comment-text">
+                           <p th:utext="${record.content}"> </p>
+                       </div>
+                   </div> <!--/.timeline-comment-->
+                    
+                </div><!-- /.white-box-->
+                
+            </div> <!--/.col-md-8-->
  
  
  <div class="col-md-4">
@@ -161,7 +155,7 @@
             </p>
           </div> <!--/.white-box-->
      <div class="white-box">
-       <h2 class="header-title">Team Members</h2>
+       <h2 class="header-title">Activity Members</h2>
       <div class="friend-list">
          <ul>
            <li> <a href="" >  <img src="/assets/images/users/avatar-1.jpg"  alt="friend"/> </a> </li>

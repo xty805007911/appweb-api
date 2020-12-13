@@ -42,7 +42,8 @@ public class IndexController {
     @RequestMapping("/")
     public String index(HttpServletRequest request) {
 
-        request.getSession().setAttribute("sessionUser",userService.getUserById(1));
+        //test: request.getSession().setAttribute("sessionUser",userService.getUserById(1));
+
         //返回结果集
         Map<String,Object> map = new HashMap<>();
 
