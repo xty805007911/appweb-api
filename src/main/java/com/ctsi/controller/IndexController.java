@@ -3,8 +3,10 @@ package com.ctsi.controller;
 import com.ctsi.config.Constant;
 import com.ctsi.entity.TbActive;
 import com.ctsi.entity.TbActiveType;
+import com.ctsi.entity.TbUser;
 import com.ctsi.service.TbActiveService;
 import com.ctsi.service.TbActiveTypeService;
+import com.ctsi.service.TbActiveUserService;
 import com.ctsi.service.TbUserService;
 import com.ctsi.util.PageResult;
 import com.ctsi.vo.ActivityQueryVO;
@@ -33,6 +35,8 @@ public class IndexController {
     TbActiveTypeService activeTypeService;
     @Autowired
     TbActiveService activeService;
+    @Autowired
+    TbActiveUserService activeUserService;
 
     //首页
     @RequestMapping("/")
@@ -72,8 +76,17 @@ public class IndexController {
 
         List<TbActiveType> activeTypeList = activeTypeService.getActiveTypeList();
 
+        //查询用户是否在活动中
+        TbUser sessionUser = (TbUser) request.getSession().getAttribute("sessionUser");
+        boolean userInActive = false;
+        if(sessionUser != null) {
+            userInActive = activeUserService.isUserInActive(sessionUser.getId(), id);
+        }
+
+
         map.put("active",active);
         map.put("activeTypeList",activeTypeList);
+        map.put("userInActive",userInActive);
 
         request.setAttribute("result",map);
         return "/index-active-detail";

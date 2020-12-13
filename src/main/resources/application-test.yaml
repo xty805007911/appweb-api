@@ -14,6 +14,7 @@ spring:
           username: root
           password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
+          type: com.zaxxer.hikari.HikariDataSource
           hikari:
             max-lifetime: 500000
   thymeleaf:

@@ -4,6 +4,7 @@ import com.ctsi.config.Constant;
 import com.ctsi.entity.TbActive;
 import com.ctsi.entity.TbActiveType;
 import com.ctsi.entity.TbFileUrl;
+import com.ctsi.entity.TbUser;
 import com.ctsi.service.MinioService;
 import com.ctsi.service.TbActiveService;
 import com.ctsi.service.TbActiveTypeService;
@@ -123,10 +124,10 @@ public class ActiveController {
 
     //查询活动参与人
     @RequestMapping("/active/participant/{id}")
-    public String participantForActive(@PathVariable Integer id) {
-
-
-        return "/active/active-participant";
+    public String participantForActive(HttpServletRequest request,@PathVariable Integer id,Integer page) {
+        PageResult<TbUser> pageResult = activeService.selectPageUserListByActiveId(id, page, Constant.PAGE_SIZE);
+        request.setAttribute("pageResult",pageResult);
+        return "/activemanage/active-participant";
     }
 
 

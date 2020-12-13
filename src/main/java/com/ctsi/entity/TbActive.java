@@ -62,8 +62,8 @@ public class TbActive implements Serializable {
     @TableField(exist = false)
     private String image;
 
-
-
+    @TableField(exist = false)
+    private List<TbActiveUserRecord> activeUserRecordList;
 
 
 }

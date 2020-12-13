@@ -3,9 +3,12 @@ package com.ctsi.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ctsi.config.Constant;
 import com.ctsi.entity.TbActive;
+import com.ctsi.entity.TbActiveUser;
 import com.ctsi.entity.TbFileUrl;
 import com.ctsi.entity.TbUser;
 import com.ctsi.mapper.TbActiveMapper;
+import com.ctsi.mapper.TbActiveUserMapper;
+import com.ctsi.mapper.TbUserMapper;
 import com.ctsi.util.DateUtils;
 import com.ctsi.util.PageResult;
 import com.ctsi.vo.ActivityQueryVO;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +30,11 @@ public class TbActiveService {
     @Autowired
     TbFileUrlService tbFileUrlService;
     @Autowired
+    TbActiveUserMapper activeUserMapper;
+    @Autowired
     TbUserService userService;
+    @Autowired
+    TbUserMapper userMapper;
 
     //添加活动
     public void add(TbActive active) {
@@ -140,8 +148,6 @@ public class TbActiveService {
                 active.setStatus(Constant.ACTIVITY_STATUS_ON_HOLD);
             }
 
-            System.out.println();
-
         }
 
 
@@ -185,6 +191,7 @@ public class TbActiveService {
         return pageInfo.getList();
     }
 
+    //根据关键字查询
     public PageResult<TbActive> pageListByKeywords(ActivityQueryVO activityQueryVO) {
 
         int page = activityQueryVO.getPage() == null || activityQueryVO.getPage() <= 0 ? 1: activityQueryVO.getPage();
@@ -205,6 +212,31 @@ public class TbActiveService {
         PageInfo<TbActive> pageInfo = new PageInfo<>(list);
         PageResult<TbActive> pageResult = new PageResult<>(pageInfo);
 
+        return pageResult;
+    }
+
+    //根据活动id分页查询用户
+    public PageResult<TbUser> selectPageUserListByActiveId(Integer activeId,Integer page,Integer pageSize) {
+        if(page==null||page<=0) {
+            page = 1;
+        }
+        PageHelper.startPage(page,pageSize);
+        QueryWrapper<TbActiveUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("active_id",activeId);
+        List<TbActiveUser> activeUserList = activeUserMapper.selectList(queryWrapper);
+
+        List<Integer> activeUserIdList = new ArrayList<>();
+        for(TbActiveUser activeUser : activeUserList) {
+            activeUserIdList.add(activeUser.getUserId());
+        }
+
+        List<TbUser> userList = new ArrayList<>();
+        //如果用户id不为空，拼接  in  条件
+        if(!CollectionUtils.isEmpty(activeUserIdList)) {
+            userList = userMapper.selectBatchIds(activeUserIdList);
+        }
+        PageInfo<TbUser> pageInfo = new PageInfo<>(userList);
+        PageResult<TbUser> pageResult = new PageResult<>(pageInfo);
         return pageResult;
     }
 

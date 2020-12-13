@@ -113,8 +113,9 @@
                              <div class="clearfix"></div>
                              <hr>
                              <div class="text-right">
-                               <button th:if="${session.sessionUser!=null}" class="btn btn-primary" type="submit"> Proceed to payment </button>
-                               <span th:if="${session.sessionUser==null}"></span>
+                               <a th:if="${session.sessionUser!=null && result.userInActive==false }" th:href="@{/user/joinActive/}+${result.active.id}" class="btn btn-primary" type="submit"> Proceed to payment </a>
+                               <a th:if="${session.sessionUser!=null && result.userInActive==true }" th:href="@{/user/joinActive/}+${result.active.id}" class="btn btn-primary" type="submit">Proceed to review </a>
+                               <a th:if="${session.sessionUser==null }" class="btn btn-primary" th:href="@{/user/login}">To Login </a>
                                <button onClick="javascript:window.print();" class="btn btn-warning btn-outline" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
                              </div>
                            </div>

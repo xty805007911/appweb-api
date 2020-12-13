@@ -67,32 +67,28 @@
                                 <thead>
                                   <tr>
                                     <th>#</th>
-                                    <th>Project Name</th>
-                                    <th >Start Date</th>
-                                    <th>Deadline Date</th>
-                                    <th>Status</th>
-                                    <th>Progress</th>
+                                    <th>Avatar</th>
+                                    <th>User Name</th>
+                                    <th>Gender</th>
+                                    <th>Mobile</th>
+                                    <th>Operation</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td>1</td>
-                                    <td>Design new theme</td>
-                                    <td>10/10/2016</td>
-                                    <td>12/11/2016</td>
-                                    <td><span class="label label-warning">Pending</span></td>
+                                  <tr th:each="item:${pageResult.list}">
+                                    <td>[[${itemStat.index+1}]]</td>
+                                    <td>
+                                        <img style='width:60px;height:auto;' th:src='${item.avatar}' alt=''>
+                                    </td>
+                                    <td>[[${item.realname}]]</td>
+                                    <td>
+                                      <span th:if="${item.gender == 1}">Man</span>
+                                      <span th:if="${item.gender == 0}">WoMan</span>
+                                    </td>
+                                    
+                                    <td>[[${item.mobile}]]</td>
                                     <td><div class="progress progress-striped progress-sm">
                                       <div class="progress-bar progress-bar-warning" style="width: 25%;"></div>
-                                    </div></td>
-                                  </tr>
-                                  <tr>
-                                    <td>2</td>
-                                    <td>Website Redesign</td>
-                                    <td>10/10/2016</td>
-                                   <td>12/11/2016</td>
-                                    <td><span class="label label-success">In Progress</span></td>
-                                    <td><div class="progress progress-striped progress-sm">
-                                      <div class="progress-bar progress-bar-success" style="width: 25%;"></div>
                                     </div></td>
                                   </tr>
                                 </tbody>

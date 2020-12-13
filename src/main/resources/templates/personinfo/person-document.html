@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+  <title>Person Document</title>
+
+    <!--Begin  Page Level  CSS -->
+    <link href="/assets/plugins/morris-chart/morris.css" rel="stylesheet">
+    <link href="/assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
+     <!--End  Page Level  CSS -->
+    <link href="/assets/css/icons.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="js/html5shiv.min.js"></script>
+          <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="sticky-header">
+
+
+<!--引入左侧菜单栏-->
+<div th:replace="/lefter :: lefterBar(activeUrl='index')"></div>
+
+    <!-- main content start-->
+<div class="main-content" >
+<div th:replace="/header :: headerBar"></div>
+        <!--body wrapper start-->
+        <div class="wrapper">
+          <!--Start Page Title-->
+           <div class="page-title-box">
+                <h4 class="page-title">Person Document</h4>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#"></a>
+                    </li>
+
+                    <li class="active">
+                        
+                    </li>
+                </ol>
+                <div class="clearfix"></div>
+             </div>
+              <!--End Page Title-->
+ <!--Start row-->
+ <div class="row">
+    <div class="col-md-12">
+       <!-- Start cover-->
+        <div class="profile-cover">
+            <div class="overlay-profile"></div>
+             <div class="profile-inner">
+                 <div class="profile-info">
+                 
+                     <div class="profile-media">
+                        <img th:src="${user.avatar}" alt="" />
+                     </div>
+                     
+                     <div class="profile-intro">
+                       <h4>[[${user.realname}]]</h4>
+                       <p th:if="${user.gender eq 1}">Man</p>
+                       <p th:if="${user.gender eq 0}">Women</p>
+                       <ul>
+                          <li> <i class="fa fa-map-marker"></i> [[${user.address}]]   </li>
+                          <li> <i class="fa fa-envelope-o"></i>[[${user.mobile}]]   </li>
+                       </ul>
+                     </div>
+                     
+                 </div> <!--/.profile-info-->
+                 
+                 <div class="profile-stats">
+                     <ul>
+                     
+                        <li>
+                           <h4>5</h4>
+                           <p>All Activity</p>
+                        </li>
+                        
+                     </ul>
+                 </div>
+                 
+                 
+             </div>
+        </div>    
+        <!-- End cover-->
+        
+    </div>
+</div>
+<!--End row-->
+
+
+<!--Start row-->
+<div class="row">
+ <div class="col-md-8">
+                     
+     <div class="white-box" th:each="active:${activeList}">
+         <div class="post-header">
+         <div class="post-author-media">
+             <img th:src="${active.image}"  alt="">
+         </div>
+         
+         <div class="post-author">
+           <h4>[[${active.name}]]</h4>
+           <p>2 hours ago</p>
+         </div>
+         </div> <!-- /.post-header-->
+         
+         <div class="post-desc">
+             <p th:utext="${active.desc}"></p>
+         </div>
+         
+        
+        <div class="timeline-comment">
+            <img src="/assets/images/profile-picture.png"  alt="">
+            <span>Jonathan Doe <small class="text-light">2 hours ago</small></span>
+            <div class="comment-text">
+                <p> Epicurei intellegat nec ei. Sed id doctus insolens pericula, sea suas nostrud accusamus.</p>
+            </div>
+        </div> <!--/.timeline-comment-->
+        
+        <div class="timeline-comment">
+            <img src="/assets/images/profile-picture.png"  alt="">
+            <span>Jonathan Doe <small class="text-light">2 hours ago</small></span>
+            <div class="comment-text">
+                <p> Epicurei intellegat nec ei. Sed id doctus insolens pericula, sea suas nostrud accusamus.</p>
+            </div>
+        </div> <!--/.timeline-comment-->
+        
+         <textarea class="form-control" placeholder="Replay"></textarea>
+         
+     </div><!-- /.white-box-->
+     
+ </div> <!--/.col-md-8-->
+ 
+ 
+ <div class="col-md-4">
+     
+     
+     <div class="white-box">
+       <h2 class="header-title">About mentalIllness</h2>
+       <p th:if="${user.mentalIllness != null || user.mentalIllness != ''}">
+            [[${user.mentalIllness}]]
+        </p>
+     </div> <!--/.white-box-->
+     
+     <div class="white-box">
+            <h2 class="header-title">About physicalIllness</h2>
+            <p th:if="${user.physicalIllness != null || user.physicalIllness != ''}">
+                    [[${user.physicalIllness}]]
+            </p>
+          </div> <!--/.white-box-->
+     <div class="white-box">
+       <h2 class="header-title">Team Members</h2>
+      <div class="friend-list">
+         <ul>
+           <li> <a href="" >  <img src="/assets/images/users/avatar-1.jpg"  alt="friend"/> </a> </li>
+           <li> <a href="" >  <img src="/assets/images/users/avatar-2.jpg"  alt="friend"/> </a> </li>
+           <li> <a href="" >  <img src="/assets/images/users/avatar-3.jpg"  alt="friend"/> </a> </li>
+            <li> <a href="" >  <img src="/assets/images/users/avatar-4.jpg"  alt="friend"/> </a> </li>
+            <li> <a href="" >  <img src="/assets/images/users/avatar-5.jpg"  alt="friend"/> </a> </li>
+            <li> <a href="" >  <img src="/assets/images/users/avatar-6.jpg"  alt="friend"/> </a> </li>
+            <li> <a href="" >  <img src="/assets/images/users/avatar-7.jpg"  alt="friend"/> </a> </li>
+            <li> <a href="" >  <img src="/assets/images/users/avatar-8.jpg"  alt="friend"/> </a> </li>
+         </ul>
+      </div>
+     </div> <!--/.white-box-->
+     
+     
+ </div> <!--/.col-md-4-->
+ 
+</div>
+<!--End row-->
+
+
+			    </div>
+        <!-- End Wrapper-->
+
+
+        <!--Start  Footer -->
+        <div th:replace="/footer :: footerBar"></div>
+         <!--End footer -->
+
+       </div>
+      <!--End main content -->
+
+
+
+    <!--Begin core plugin -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/plugins/moment/moment.js"></script>
+    <script  src="/assets/js/jquery.slimscroll.js "></script>
+    <script src="/assets/js/jquery.nicescroll.js"></script>
+    <script src="/assets/js/functions.js"></script>
+    <!-- End core plugin -->
+
+    <!--Begin Page Level Plugin-->
+	<script src="/assets/plugins/morris-chart/morris.js"></script>
+    <script src="/assets/plugins/morris-chart/raphael-min.js"></script>
+    <script src="/assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="/assets/pages/dashboard.js"></script>
+    <!--End Page Level Plugin-->
+
+
+</body>
+
+</html>
