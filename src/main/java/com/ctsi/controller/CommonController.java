@@ -41,14 +41,14 @@ public class CommonController {
         Map<String,Object> map = new HashMap<>();
         map.put("msg","");
         request.setAttribute("result",map);
-        return "/login";
+        return "login";
     }
 
     // 去注册页面
     @RequestMapping("/toRegister")
     public String toRegister() {
 
-        return "/register";
+        return "register";
     }
 
     //注册
@@ -57,19 +57,19 @@ public class CommonController {
 
         if(formUser.getMobile() == null || formUser.getMobile().trim().equals("")) {
             request.setAttribute("msg","The cell phone number cannot be empty");
-            return "/register";
+            return "register";
         }
         if(formUser.getPassword() == null || formUser.getPassword().trim().equals("")) {
             request.setAttribute("msg","The password cannot be empty");
-            return "/register";
+            return "register";
         }
         if(formUser.getRealname() == null || formUser.getRealname().trim().equals("")) {
             request.setAttribute("msg","The real name cannot be empty");
-            return "/register";
+            return "register";
         }
         if(userService.isUserExistByMobile(formUser.getMobile())) {
             request.setAttribute("msg","The phone number has been registered");
-            return "/register";
+            return "register";
         }
 
         userService.saveUser(formUser);
@@ -117,7 +117,7 @@ public class CommonController {
             Map<String,Object> map = new HashMap<>();
             map.put("error","mobile or password error.");
             request.setAttribute("result",map);
-            return "/login";
+            return "login";
         }
 
         user.setAvatar(userService.getUserAvatar(user.getId()));

@@ -38,6 +38,8 @@ public class IndexController {
     @Autowired
     TbActiveUserService activeUserService;
 
+    private static final double num = Math.random();
+
     //首页
     @RequestMapping("/")
     public String index(HttpServletRequest request) {
@@ -64,9 +66,9 @@ public class IndexController {
         List<TbActive> activeListByStartTimeDesc = activeService.getActiveListByStartTimeDesc(10);
         map.put("activeListByStartTimeDesc",activeListByStartTimeDesc);
 
-
+        request.setAttribute("test",num);
         request.setAttribute("result",map);
-        return "/index";
+        return "index";
     }
 
     //首页：查询活动详情
@@ -90,7 +92,7 @@ public class IndexController {
         map.put("userInActive",userInActive);
 
         request.setAttribute("result",map);
-        return "/index-active-detail";
+        return "index-active-detail";
     }
 
     //查询
@@ -104,7 +106,7 @@ public class IndexController {
         request.setAttribute("activityQueryVO",activityQueryVO);
         request.setAttribute("pageResult",activePageResult);
 
-        return "/index-active-search";
+        return "index-active-search";
     }
 
 }

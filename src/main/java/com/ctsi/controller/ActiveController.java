@@ -80,7 +80,7 @@ public class ActiveController {
         }
         PageResult<TbActive> pageResult = activeService.pageList(active, page, Constant.PAGE_SIZE);
         request.setAttribute("pageResult",pageResult);
-        return "/activemanage/active-list";
+        return "activemanage/active-list";
     }
 
     //去添加页面
@@ -90,7 +90,7 @@ public class ActiveController {
         Map<String,Object> map = new HashMap<>();
         map.put("activeTypeList",activeTypeList);
         request.setAttribute("result",map);
-        return "/activemanage/active-add";
+        return "activemanage/active-add";
     }
 
     //活动详情页面
@@ -105,7 +105,7 @@ public class ActiveController {
         map.put("activeTypeList",activeTypeList);
 
         request.setAttribute("result",map);
-        return "/activemanage/active-edit";
+        return "activemanage/active-edit";
     }
 
     //修改
@@ -128,7 +128,7 @@ public class ActiveController {
         PageResult<TbUser> pageResult = activeService.selectPageUserListByActiveId(id, page, Constant.PAGE_SIZE);
         request.setAttribute("pageResult",pageResult);
         request.setAttribute("activeId",id);
-        return "/activemanage/active-participant";
+        return "activemanage/active-participant";
     }
 
 

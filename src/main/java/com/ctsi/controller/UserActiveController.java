@@ -52,7 +52,7 @@ public class UserActiveController {
 
 
         request.setAttribute("user",sessionUser);
-        return "/personinfo/person-document";//去编辑档案页面
+        return "personinfo/person-document";//去编辑档案页面
     }
 
     //查询用户信息（个人用户）
@@ -67,7 +67,7 @@ public class UserActiveController {
 
         request.setAttribute("activeList",activeList);
         request.setAttribute("user",sessionUser);
-        return "/personinfo/person-document";//去编辑档案页面
+        return "personinfo/person-document";//去编辑档案页面
     }
 
     //查询用户活动档案
@@ -82,7 +82,7 @@ public class UserActiveController {
 
         TbActiveUser activeUser = activeUserService.selectActiveUserByUserIdAndActiveId(userId, activeId);
         request.setAttribute("activeUser",activeUser);
-        return "/activemanage/user-document-detail";
+        return "activemanage/user-document-detail";
     }
 
     //管理员：添加一条活动记录
@@ -100,7 +100,7 @@ public class UserActiveController {
         TbActiveUser activeUser = activeUserService.selectActiveUserByUserIdAndActiveId(activeUserRecord.getUserId(), activeUserRecord.getActiveId());
         request.setAttribute("activeUser",activeUser);
 
-        return "/activemanage/user-document-detail";
+        return "activemanage/user-document-detail";
     }
 
 }

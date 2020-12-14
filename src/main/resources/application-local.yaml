@@ -10,9 +10,9 @@ spring:
       datasource:
         # 读数据库
         master:
-          url: jdbc:mysql://192.9.99.91:3306/xty_test?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
-          username: biyi2020
-          password: aigO5G@Vkiq32f
+          url: jdbc:mysql://47.105.176.145:3306/appweb?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+          username: root
+          password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
           type: com.zaxxer.hikari.HikariDataSource
           hikari:
