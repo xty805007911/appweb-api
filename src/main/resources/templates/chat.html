@@ -18,6 +18,7 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/css/style.css" rel="stylesheet">
     <link href="/assets/css/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.staticfile.org/element-ui/2.13.1/theme-chalk/index.css">
     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,99 +32,101 @@
 <body class="sticky-header">
 
 
-<!--引入左侧菜单栏-->
-<div th:replace="lefter :: lefterBar(activeUrl='index')"></div>
+    <!--引入左侧菜单栏-->
+    <div th:replace="lefter :: lefterBar(activeUrl='index')"></div>
+        
+        <!-- main content start-->
+        <div class="main-content" >
+    <div th:replace="header :: headerBar"></div>
     
-    <!-- main content start-->
-    <div class="main-content" >
-<div th:replace="header :: headerBar"></div>
-
-
-
-        <!--body wrapper start-->
-        <div class="wrapper">
-              
-          <!--Start Page Title-->
-           <div class="page-title-box">
-                <h4 class="page-title">Activity Project </h4>
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#"></a>
-                    </li>
-                    
-                    <li class="active">
-                         
-                    </li>
-                </ol>
-                <div class="clearfix"></div>
-             </div>
-              <!--End Page Title-->          
-           
-                 <!--Start row-->
-                 <div class="row">
-                     <div class="container">
-                         <div class="analytics-box">
-                             
-                         </div>
-                     </div>
-                 </div>
-                 <!--End row-->
+    
+    
+            <!--body wrapper start-->
+            <div class="wrapper" id="app111">
                   
-                   <!--Start row-->
-                   <div class="row">
-                   
-                   <!--Start chat widget-->
-                   <div class="col-md-12">
-                       <div class="white-box">
-                           <h2 class="header-title">Chat</h2>
-                           
-                           <div class="chat-widget">
-                              <ul  class="chat-scroll-list">
-                                <li class="left">
-                                   <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="" />
-                                    <div class="chat-info">
-                                       <a class="name" href="#"> Tom</a>
-                                       <span class="datetime">2020-12-14</span>
-                                       <span class="message">
-                                         Hello!!!
-                                        </span>
+              <!--Start Page Title-->
+               <div class="page-title-box">
+                    <h4 class="page-title">Activity Project </h4>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="#"></a>
+                        </li>
+                        
+                        <li class="active">
+                             
+                        </li>
+                    </ol>
+                    <div class="clearfix"></div>
+                 </div>
+                  <!--End Page Title-->          
+               
+                       <!--Start chat widget-->
+                       <div class="col-md-10">
+                           <div class="white-box">
+                               <h2 class="header-title">Chat</h2>
+                               <div class="chat-widget" style=" height: 400px; overflow-y:scroll">
+                                  <ul  class="chat-scroll-list" style="height: auto!important; overflow: auto!important;">
+                                    <div v-for="(item,index) in msgList" :key="item.id">
+                                    <li class="left" v-if="index%2==0" >
+                                       <img  src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="" />
+                                        <div class="chat-info">
+                                            <a class="name" href="#">{{item.userUserId}}</a> AT
+                                           <span class="datetime">{{item.createTime}}</span><br/>
+                                           <span class="message">
+                                               {{item.message}}
+                                               asdasdasdasdasdasdasgasasdgsadgsad
+                                               1111111111111124121244444444444
+                                               asdasdasdasdasdasdasgasasdgsadgsad
+                                               asdasdasdasdasdasdasgasasdgsadgsad
+                                            </span>
+                                       </div>
+                                    </li>
+
+                                    <li class="right"  v-if="index%2==0" >
+                                        <img  src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="" />
+                                         <div class="chat-info">
+                                             <a class="name" href="#">{{item.userUserId}}</a> AT
+                                            <span class="datetime">{{item.createTime}}</span><br/>
+                                            <span class="message">
+                                                {{item.message}}
+                                                asdasdasdasdasdasdasgasasdgsadgsad
+                                                1111111111111124121244444444444
+                                                asdasdasdasdasdasdasgasasdgsadgsad
+                                                asdasdasdasdasdasdasgasasdgsadgsad
+                                             </span>
+                                        </div>
+                                     </li>
+
+
                                    </div>
-                                </li>
+                                    </ul>
+                               </div>
+                                  
+                                    <hr style="height:3px;border:none;border-top:3px double black;" />
 
-                                <li class="right">
-                                    <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="" />
-                                     <div class="chat-info">
-                                             <a class="name" href="#"> Jerry</a>
-                                        <span class="datetime">2020-12-14</span>
-                                        <span class="message">
-                                          World!!!
-                                         </span>
-                                    </div>
-                                 </li>
-                                
+                                    <textarea style="width: 100%; height: 100%" name="message"></textarea>
+                                    <button type="submit" class="btn btn-primary round" id="addButton" @click="add()">Commit</button>
+
+                               </div>
                                
-                                
-                              </ul>
                            </div>
-                           
                        </div>
-                   </div>
-                   <!--End chat widget-->
-                       
-                   </div>
-                   <!--End row-->
-			   
-			    </div>
-        <!-- End Wrapper-->
+                       <!--End chat widget-->
 
-        <!--Start  Footer -->
-        <div th:replace="footer :: footerBar"></div>
 
-         <!--End footer -->
-
-       </div>
-      <!--End main content -->
+                       </div>
+                       <!--End row-->
+                   
+                    </div>
+            <!-- End Wrapper-->
     
+            <!--Start  Footer -->
+            <div th:replace="footer :: footerBar"></div>
+    
+             <!--End footer -->
+    
+           </div>
+          <!--End main content -->
 
 
     <!--Begin core plugin -->
@@ -138,9 +141,75 @@
     <!--Begin Page Level Plugin-->
 	<script src="/assets/plugins/morris-chart/morris.js"></script>
     <script src="/assets/plugins/morris-chart/raphael-min.js"></script>
-    <script src="/assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
     <script src="/assets/pages/dashboard.js"></script>
     <!--End Page Level Plugin-->
+
+    <script src="http://cdn.staticfile.org/vue/2.6.11/vue.min.js"></script>
+    <script src="http://cdn.staticfile.org/axios/0.19.2/axios.min.js"></script>
+    <script src="http://cdn.staticfile.org/element-ui/2.13.1/index.js"></script>
+
+
+<script>
+    new Vue({
+        el: '#app111',
+        data: {
+            userUserId: 0,
+            activeUserId: 0,
+            result:{},
+            msgList: [],
+            intervalId:null
+        },
+        methods: {
+            init() {
+                axios.get('/chat/list').then(response => {
+                    this.result = response.data;
+                    this.msgList = response.data.list;
+                    this.msgList =  this.msgList.reverse();
+                    console.log(this.msgList);
+                    console.log(this.msgList.length);
+            });
+            },
+
+            sendMsg() {
+                axios.post('/chat/add').then(response => {
+                    this.result = response.data;
+                    this.msgList = response.data.list;
+                    this.msgList =  this.msgList.reverse();
+                    console.log(this.msgList);
+                    console.log(this.msgList.length);
+            });
+            },
+
+                    // 定时刷新数据函数
+            dataRefreh() {
+            // 计时器正在进行中，退出函数
+            if (this.intervalId != null) {
+                return;
+            }
+            // 计时器为空，操作
+            this.intervalId = setInterval(() => {
+                console.log("刷新" + new Date());
+                this.init(); //加载数据函数
+            }, 10000);
+            }, 
+            // 停止定时器
+            clear() {
+            clearInterval(this.intervalId); //清除计时器
+            this.intervalId = null; //设置为null
+            },
+        },
+        mounted() {
+            this.init();
+        },
+        created(){
+            this.dataRefreh();
+        },
+        destroyed(){
+            // 在页面销毁后，清除计时器
+            this.clear();
+        }
+    });
+</script>
 
 
 </body>

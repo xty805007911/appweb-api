@@ -109,4 +109,9 @@ public class IndexController {
         return "index-active-search";
     }
 
+    @RequestMapping(value= "/toChat")
+    public String toChat() {
+        return "chat";
+    }
+
 }
