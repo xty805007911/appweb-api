@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,17 +26,17 @@ public class TbChatService {
     TbChatMapper chatMapper;
 
     //分页查询消息，从后往前查询
-    public PageResult<TbChat> pageChatListDesc(Integer page, Integer size) {
+    public PageResult<TbChat> pageChatListDesc(Integer page, Integer size,Integer userUserId,Integer providerId) {
 
         if(page == null || page <= 0) {
             page = 1;
         }
 
         QueryWrapper<TbChat> chatQueryWrapper = new QueryWrapper<>();
-        chatQueryWrapper.eq("user_user_id",2);
-        chatQueryWrapper.eq("active_user_id",1);
+        chatQueryWrapper.eq("user_user_id",userUserId);
+        chatQueryWrapper.eq("active_user_id",providerId);
 
-        chatQueryWrapper.orderByDesc("create_time");
+        chatQueryWrapper.orderByDesc("id");
 
         PageHelper.startPage(page,size);
         List<TbChat> chatList = chatMapper.selectList(chatQueryWrapper);
@@ -46,5 +47,10 @@ public class TbChatService {
         System.out.println(pageResult.getList().size());
 
         return pageResult;
+    }
+
+    public void save(TbChat chat) {
+        chat.setCreateTime(new Date());
+        chatMapper.insert(chat);
     }
 }

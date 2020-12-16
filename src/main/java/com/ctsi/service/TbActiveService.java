@@ -245,4 +245,11 @@ public class TbActiveService {
         activeUserRecordMapper.insert(activeUserRecord);
     }
 
+    //根据活动id查询活动提供者
+    public TbUser selectActiveProviderUserByActiveId(Integer activeId) {
+        TbActive tbActive = activeMapper.selectById(activeId);
+        return userMapper.selectById(tbActive.getCreateUserId());
+
+    }
+
 }

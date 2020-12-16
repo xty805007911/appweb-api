@@ -86,10 +86,14 @@ public class IndexController {
             userInActive = activeUserService.isUserInActive(sessionUser.getId(), id);
         }
 
+        //查询活动提供者
+        TbUser providerUser = activeService.selectActiveProviderUserByActiveId(id);
+
 
         map.put("active",active);
         map.put("activeTypeList",activeTypeList);
         map.put("userInActive",userInActive);
+        map.put("providerUser",providerUser);
 
         request.setAttribute("result",map);
         return "index-active-detail";
@@ -109,9 +113,11 @@ public class IndexController {
         return "index-active-search";
     }
 
-    @RequestMapping(value= "/toChat")
-    public String toChat() {
-        return "chat";
+
+    @RequestMapping(value= "/toChat/toProvider")
+    public String toChat(HttpServletRequest request,Integer providerId) {
+        request.setAttribute("providerId",providerId);
+        return "chat-to-provider";
     }
 
 }

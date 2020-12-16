@@ -19,4 +19,5 @@ public class TbChat {
     private Integer userUserId;
     private String message;
     private Date createTime;
+    private Integer status;
 }

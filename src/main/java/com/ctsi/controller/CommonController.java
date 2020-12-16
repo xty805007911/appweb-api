@@ -120,7 +120,7 @@ public class CommonController {
         TbUser user = userService.getUserByMobileAndPassword(formUser.getMobile(), formUser.getPassword());
         if(user == null || user.getId() == null) {
             Map<String,Object> map = new HashMap<>();
-            map.put("error","mobile or password error.");
+            map.put("msg","mobile or password error.");
             request.setAttribute("result",map);
             return "login";
         }
