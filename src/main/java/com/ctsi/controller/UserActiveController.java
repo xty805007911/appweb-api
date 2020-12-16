@@ -103,4 +103,16 @@ public class UserActiveController {
         return "activemanage/user-document-detail";
     }
 
+    //查询用户信息（个人用户），根据用户id查询
+    @RequestMapping("/user/document/{userId}")
+    public String personDocument(HttpServletRequest request,@PathVariable Integer userId) {
+
+        //查询所有的活动
+        List<TbActive> activeList = activeUserService.selectActiveListByUser(userId,null);
+
+        request.setAttribute("activeList",activeList);
+        request.setAttribute("user",userService.getUserById(userId));
+        return "personinfo/person-document";//去编辑档案页面
+    }
+
 }

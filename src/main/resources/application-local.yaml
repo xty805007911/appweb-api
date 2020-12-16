@@ -23,7 +23,8 @@ spring:
                   prepStmtCacheSqlLimit: 20481
                   useServerPrepStmts: true
               minimum-idle: 3
-              max-lifetime: 0
+              max-lifetime: 30000
+              connection-test-query: SELECT 1
   thymeleaf:
     cache: false
 minio:
