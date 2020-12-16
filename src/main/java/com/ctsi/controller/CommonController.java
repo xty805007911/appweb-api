@@ -2,14 +2,17 @@ package com.ctsi.controller;
 
 import com.ctsi.config.Constant;
 import com.ctsi.entity.TbFileUrl;
+import com.ctsi.entity.TbRole;
 import com.ctsi.entity.TbUser;
 import com.ctsi.service.MinioService;
 import com.ctsi.service.TbFileUrlService;
+import com.ctsi.service.TbRoleService;
 import com.ctsi.service.TbUserService;
 import com.ctsi.util.CookieUtils;
 import com.ctsi.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +37,8 @@ public class CommonController {
     MinioService minioService;
     @Autowired
     TbFileUrlService fileUrlService;
+    @Autowired
+    TbRoleService roleService;
 
     //登录页跳转
     @RequestMapping("/toLogin")
@@ -121,7 +126,18 @@ public class CommonController {
         }
 
         user.setAvatar(userService.getUserAvatar(user.getId()));
+        List<TbRole> roleList = roleService.userRoleList(user.getId());
 
+        List<TbRole> allRoleList = roleService.selectAllRoles();
+        if(!CollectionUtils.isEmpty(roleList)) {
+
+            for(TbRole role : allRoleList) {
+                session.setAttribute("sessionrole"+role.getCode(),0);
+            }
+            for(TbRole role : roleList) {
+                session.setAttribute("sessionrole"+role.getCode(),1);
+            }
+        }
         session.setAttribute("sessionUser",user);
         return "redirect:/";
     }
