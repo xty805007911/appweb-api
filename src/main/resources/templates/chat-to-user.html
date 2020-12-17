@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+  <title>Activity Index</title>
+
+    <!--Begin  Page Level  CSS -->
+    <link href="/assets/plugins/morris-chart/morris.css" rel="stylesheet">
+    <link href="/assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
+     <!--End  Page Level  CSS -->
+    <link href="/assets/css/icons.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.staticfile.org/element-ui/2.13.1/theme-chalk/index.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="js/html5shiv.min.js"></script>
+          <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="sticky-header">
+
+
+    <!--引入左侧菜单栏-->
+    <div th:replace="lefter :: lefterBar(activeUrl='index')"></div>
+        
+        <!-- main content start-->
+        <div class="main-content" >
+    <div th:replace="header :: headerBar"></div>
+    
+    
+    
+            <!--body wrapper start-->
+            <div class="wrapper" id="app111">
+                  
+              <!--Start Page Title-->
+               <div class="page-title-box">
+                    <h4 class="page-title">Activity Project </h4>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="#"></a>
+                        </li>
+                        
+                        <li class="active">
+                             
+                        </li>
+                    </ol>
+                    <div class="clearfix"></div>
+                 </div>
+                  <!--End Page Title-->          
+               
+                       <!--Start chat widget-->
+                       <div class="col-md-10">
+                           <div class="white-box">
+                               <h2 class="header-title">Chat</h2>
+                               <div class="chat-widget" style=" height: 400px; overflow-y:scroll">
+                                  <ul  class="chat-scroll-list" style="height: auto!important; overflow: auto!important;">
+                                    <div v-for="(item,index) in msgList" :key="item.id">
+                                    <li v-if="item.status==0" class="left" >
+                                       <img  th:src="${session.sessionUser.avatar}" alt="" />
+                                        <div class="chat-info">
+                                            <a class="name" href="#">[[${session.sessionUser.realname}]]</a> AT
+                                           <span class="datetime">{{item.createTime}}</span><br/>
+                                           <span class="message">
+                                               {{item.message}}
+                                            </span>
+                                       </div>
+                                    </li>
+
+
+                                    <li v-if="item.status==1" class="right" >
+                                            <img  :src="item.userAvatar" alt="" />
+                                             <div class="chat-info">
+                                                 <a class="name" href="#">{{item.userUserId}}</a> AT
+                                                <span class="datetime">{{item.createTime}}</span><br/>
+                                                <span class="message">
+                                                    {{item.message}}
+                                                 </span>
+                                            </div>
+                                         </li>
+
+                                   </div>
+                                    </ul>
+                               </div>
+                                  
+                                    <hr style="height:3px;border:none;border-top:3px double black;" />
+                                    <input type="hidden"  th:value="${userId}" id="userId">
+                                    <textarea style="width: 100%; height: 100%" name="message" v-model="message"></textarea>
+                                    <button type="submit" class="btn btn-primary round" id="addButton" @click="sendMsg()">Commit</button>
+
+                               </div>
+                               
+                           </div>
+                       </div>
+                       <!--End chat widget-->
+
+
+                       </div>
+                       <!--End row-->
+                   
+                    </div>
+            <!-- End Wrapper-->
+    
+            <!--Start  Footer -->
+            <div th:replace="footer :: footerBar"></div>
+    
+             <!--End footer -->
+    
+           </div>
+          <!--End main content -->
+
+
+    <!--Begin core plugin -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/plugins/moment/moment.js"></script>
+    <script  src="/assets/js/jquery.slimscroll.js "></script>
+    <script src="/assets/js/jquery.nicescroll.js"></script>
+    <script src="/assets/js/functions.js"></script>
+    <!-- End core plugin -->
+    
+    <!--Begin Page Level Plugin-->
+	<script src="/assets/plugins/morris-chart/morris.js"></script>
+    <script src="/assets/plugins/morris-chart/raphael-min.js"></script>
+    <script src="/assets/pages/dashboard.js"></script>
+    <!--End Page Level Plugin-->
+
+    <script src="http://cdn.staticfile.org/vue/2.6.11/vue.min.js"></script>
+    <script src="http://cdn.staticfile.org/axios/0.19.2/axios.min.js"></script>
+    <script src="http://cdn.staticfile.org/element-ui/2.13.1/index.js"></script>
+
+
+<script>
+    new Vue({
+        el: '#app111',
+        data: {
+            userUserId: 0,
+            activeUserId: 0,
+            result:{},
+            msgList: [],
+            intervalId:null,
+            message: '',
+            userId: 0
+        },
+        methods: {
+            init() {
+                this.userId = document.getElementById('userId').value;
+                axios.get('/chat/list/forProvider?userId='+this.userId).then(response => {
+                    this.result = response.data;
+                    this.msgList = response.data.list;
+                    this.msgList =  this.msgList.reverse();
+                    
+            });
+            },
+
+            sendMsg() {
+                this.userId = document.getElementById('userId').value;
+                axios.get('/chat/toUser?userId='+this.userId+'&message='+this.message).then(response => {
+                    this.message = '';
+            });
+            },
+             // 定时刷新数据函数
+            dataRefreh() {
+            // 计时器正在进行中，退出函数
+            if (this.intervalId != null) {
+                return;
+            }
+            // 计时器为空，操作
+            this.intervalId = setInterval(() => {
+                console.log("刷新" + new Date());
+                this.init(); //加载数据函数
+            }, 1000);
+            }, 
+            // 停止定时器
+            clear() {
+            clearInterval(this.intervalId); //清除计时器
+            this.intervalId = null; //设置为null
+            },
+        },
+        mounted() {
+            this.init();
+        },
+        created(){
+            this.dataRefreh();
+        },
+        destroyed(){
+            // 在页面销毁后，清除计时器
+            this.clear();
+        }
+    });
+</script>
+
+
+</body>
+
+</html>
