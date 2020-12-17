@@ -116,10 +116,10 @@
                              <div class="text-right">
                                <div th:if="${session.sessionUser!=null}">
                                <a th:if="${session.sessionroleuser eq 1}" th:href="@{/toChat/toProvider?providerId=}+${result.providerUser.id}" class="btn btn-primary" type="submit"> Chat</a>
-                               <a th:if="${result.userInActive==false }" th:href="@{/user/joinActive/}+${result.active.id}" class="btn btn-primary" type="submit"> Proceed to payment </a>
+                               <a th:if="${result.userInActive==false && session.sessionroleuser eq 1 }" th:href="@{/user/joinActive/}+${result.active.id}" class="btn btn-primary" type="submit"> Sign Up</a>
                                <a th:if="${result.userInActive==true }" th:href="@{/user/joinActive/}+${result.active.id}" class="btn btn-primary" type="submit">Proceed to review </a>
                                </div>
-                               <a th:if="${session.sessionUser==null }" class="btn btn-primary" th:href="@{/user/toLogin}">To Login </a>
+                               <a th:if="${session.sessionUser==null }" class="btn btn-primary" th:href="@{/toLogin}">To Login </a>
                                <button onClick="javascript:window.print();" class="btn btn-warning btn-outline" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
                              </div>
                            </div>

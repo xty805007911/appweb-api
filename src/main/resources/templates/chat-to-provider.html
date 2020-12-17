@@ -68,9 +68,9 @@
                                   <ul  class="chat-scroll-list" style="height: auto!important; overflow: auto!important;">
                                     <div v-for="(item,index) in msgList" :key="item.id">
                                     <li v-if="item.status==1" class="left" >
-                                       <img  src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="" />
+                                        <img  th:src="${session.sessionUser.avatar}" alt="" />
                                         <div class="chat-info">
-                                            <a class="name" href="#">{{item.userUserId}}</a> AT
+                                            <a class="name" href="#">[[${session.sessionUser.realname}]]</a> AT
                                            <span class="datetime">{{item.createTime}}</span><br/>
                                            <span class="message">
                                                {{item.message}}
@@ -80,7 +80,7 @@
 
 
                                     <li v-if="item.status==0" class="right" >
-                                            <img  src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="" />
+                                            <img  :src="item.providerAvatar" alt="" />
                                              <div class="chat-info">
                                                  <a class="name" href="#">{{item.userUserId}}</a> AT
                                                 <span class="datetime">{{item.createTime}}</span><br/>
@@ -151,7 +151,7 @@
             msgList: [],
             intervalId:null,
             message: '',
-            providerId: 0
+            providerId: 0,
         },
         methods: {
             init() {
@@ -160,8 +160,6 @@
                     this.result = response.data;
                     this.msgList = response.data.list;
                     this.msgList =  this.msgList.reverse();
-                    
-                    
             });
             },
 
@@ -192,7 +190,7 @@
             }
             // 计时器为空，操作
             this.intervalId = setInterval(() => {
-                console.log("刷新" + new Date());
+                //console.log("刷新" + new Date());
                 this.init(); //加载数据函数
             }, 1000);
             }, 

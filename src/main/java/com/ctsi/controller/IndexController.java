@@ -11,6 +11,7 @@ import com.ctsi.service.TbUserService;
 import com.ctsi.util.PageResult;
 import com.ctsi.vo.ActivityQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -118,6 +119,12 @@ public class IndexController {
     public String toChat(HttpServletRequest request,Integer providerId) {
         request.setAttribute("providerId",providerId);
         return "chat-to-provider";
+    }
+
+    @RequestMapping(value= "/toChat/toUser")
+    public String toChatToUser(HttpServletRequest request,Integer userId) {
+        request.setAttribute("userId",userId);
+        return "chat-to-user";
     }
 
 }

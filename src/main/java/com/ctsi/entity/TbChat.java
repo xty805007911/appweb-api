@@ -1,6 +1,7 @@
 package com.ctsi.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -20,4 +21,12 @@ public class TbChat {
     private String message;
     private Date createTime;
     private Integer status;
+
+    @TableField(exist = false)
+    private String userAvatar;
+
+    @TableField(exist = false)
+    private String providerAvatar;
+
+
 }

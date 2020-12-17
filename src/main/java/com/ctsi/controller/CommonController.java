@@ -4,13 +4,12 @@ import com.ctsi.config.Constant;
 import com.ctsi.entity.TbFileUrl;
 import com.ctsi.entity.TbRole;
 import com.ctsi.entity.TbUser;
-import com.ctsi.service.MinioService;
-import com.ctsi.service.TbFileUrlService;
-import com.ctsi.service.TbRoleService;
-import com.ctsi.service.TbUserService;
+import com.ctsi.service.*;
 import com.ctsi.util.CookieUtils;
+import com.ctsi.util.PageResult;
 import com.ctsi.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +28,7 @@ import java.util.Map;
  * @Date: 2020-12-07 17:36
  */
 @Controller
+@Scope("prototype")
 public class CommonController {
 
     @Autowired
@@ -39,6 +39,8 @@ public class CommonController {
     TbFileUrlService fileUrlService;
     @Autowired
     TbRoleService roleService;
+    @Autowired
+    TbChatService chatService;
 
     //登录页跳转
     @RequestMapping("/toLogin")
@@ -139,6 +141,7 @@ public class CommonController {
             }
         }
         session.setAttribute("sessionUser",user);
+
         return "redirect:/";
     }
     //退出
