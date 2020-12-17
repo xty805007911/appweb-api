@@ -30,6 +30,7 @@ public class UserManageService {
         PageHelper.startPage(page,size);
 
         QueryWrapper<TbUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("id");
         List<TbUser> userList = userMapper.selectList(queryWrapper);
         for(TbUser user : userList) {
             String avatar = userService.getUserAvatar(user.getId());

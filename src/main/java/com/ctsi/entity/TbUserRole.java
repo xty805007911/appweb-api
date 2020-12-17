@@ -1,5 +1,8 @@
 package com.ctsi.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -13,6 +16,7 @@ public class TbUserRole implements Serializable {
      *
      * @mbg.generated Wed Dec 09 15:32:33 CST 2020
      */
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -22,6 +26,7 @@ public class TbUserRole implements Serializable {
      *
      * @mbg.generated Wed Dec 09 15:32:33 CST 2020
      */
+
     private Integer userId;
 
     /**

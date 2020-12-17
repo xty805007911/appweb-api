@@ -60,7 +60,7 @@ public class CommonController {
 
     //注册
     @RequestMapping("/register")
-    public String register(TbUser formUser, MultipartFile[] file,HttpServletRequest request) {
+    public String register(TbUser formUser,Integer roleId, MultipartFile[] file,HttpServletRequest request) {
 
         if(formUser.getMobile() == null || formUser.getMobile().trim().equals("")) {
             request.setAttribute("msg","The cell phone number cannot be empty");
@@ -79,7 +79,7 @@ public class CommonController {
             return "register";
         }
 
-        userService.saveUser(formUser);
+        userService.saveUser(formUser,roleId);
 
         System.out.println(file[0].getSize());
 
@@ -127,6 +127,13 @@ public class CommonController {
             return "login";
         }
 
+        if(user.getEnabled() == 0) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("msg","The account has not been audited.");
+            request.setAttribute("result",map);
+            return "login";
+        }
+
         user.setAvatar(userService.getUserAvatar(user.getId()));
         List<TbRole> roleList = roleService.userRoleList(user.getId());
 
@@ -159,8 +166,8 @@ public class CommonController {
     }
 
     @PostMapping("/user/register")
-    public Result register(@RequestBody TbUser user) {
-        userService.saveUser(user);
+    public Result register(@RequestBody TbUser user,Integer roleId) {
+        userService.saveUser(user,roleId);
         return Result.ok();
     }
 }
