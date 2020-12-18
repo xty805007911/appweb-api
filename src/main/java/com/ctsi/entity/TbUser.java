@@ -28,9 +28,13 @@ public class TbUser {
     private Integer enabled;
     private String avatar;
 
+
     //个人档案
     private String mentalIllness;
     private String physicalIllness;
+    private Double height;
+    private Double weight;
+    private Double dayActive;
 
     @TableField(exist = false)
     private String token;

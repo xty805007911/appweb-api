@@ -80,6 +80,7 @@ public class UserActiveController {
         //查询所有的活动
         List<TbActive> activeList = activeUserService.selectActiveListByUser(userId,activeId);
         TbUser userById = userService.getUserById(userId);
+        userById.setAvatar(userService.getUserAvatar(userId));
         request.setAttribute("activeList",activeList);
         request.setAttribute("user",userById);
 

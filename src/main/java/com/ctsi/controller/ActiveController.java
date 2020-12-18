@@ -146,5 +146,21 @@ public class ActiveController {
         return "activedonatemanage/activedonate-list";
     }
 
+    //活动详情页面
+    @RequestMapping("/active/donate/{id}")
+    public String activeDetailForDonate(@PathVariable Integer id,HttpServletRequest request) {
+
+        TbActive active = activeService.getActiveById(id);
+
+        List<TbActiveType> activeTypeList = activeTypeService.getActiveTypeList();
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("active",active);
+        map.put("activeTypeList",activeTypeList);
+
+        request.setAttribute("result",map);
+        return "activedonatemanage/activedonate-detail";
+    }
+
 
 }

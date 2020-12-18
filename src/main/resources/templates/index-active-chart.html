@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+  
+  <title>Chart</title>
+
+    <!--Begin  Page Level  CSS -->
+    <link href="/assets/plugins/morris-chart/morris.css" rel="stylesheet">
+    <link href="/assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
+     <!--End  Page Level  CSS -->
+    <link href="/assets/css/icons.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/responsive.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="js/html5shiv.min.js"></script>
+          <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="sticky-header">
+
+
+<!--引入左侧菜单栏-->
+<div th:replace="/lefter :: lefterBar(activeUrl='index')"></div>
+
+    <!-- main content start-->
+<div class="main-content" >
+<div th:replace="/header :: headerBar"></div>
+<input type="hidden" th:value="${activeId}" id="activeId">
+        <!--body wrapper start-->
+        <div class="wrapper">
+               <!-- Start row--> 
+              
+                  <div class="col-md-6">
+                      <div class="white-box">
+                          <div id="mentalIllnessStatistics" style="width: 100%;height:300px;"></div>
+                      </div>
+                  </div>
+
+                  <div class="col-md-6">
+                      <div class="white-box">
+                          <div id="physicalIllnessStatistics" style="width: 100%;height:300px;"></div>
+                      </div>
+                  </div>
+
+
+                  <div class="col-md-10">
+                      <div class="white-box">
+                          <div id="fitChart" style="width: 100%;height:300px;"></div>
+                      </div>
+                  </div>
+                
+              <!-- End row-->
+           
+			    </div>
+        <!-- End Wrapper-->
+
+
+        <!--Start  Footer -->
+        <div th:replace="/footer :: footerBar"></div>
+         <!--End footer -->
+
+      <!--End main content -->
+
+
+
+   <!--Begin core plugin -->
+   <script src="/assets/js/jquery.min.js"></script>
+   <script src="/assets/js/bootstrap.min.js"></script>
+   <script src="/assets/plugins/moment/moment.js"></script>
+   <script  src="/assets/js/jquery.slimscroll.js "></script>
+   <script src="/assets/js/jquery.nicescroll.js"></script>
+   <script src="/assets/js/functions.js"></script>
+   <!-- End core plugin -->
+
+        <!-- BEGIN PAGE LEVEL SCRIPTS -->
+  <script src="/assets/js/echarts.min.js"></script>
+  <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts-en.common.js"></script>
+  <!-- BEGIN PAGE LEVEL SCRIPTS -->
+
+  <script>
+      $(function(){
+          // 基于准备好的dom，初始化echarts实例
+          var mentalIllnessStatisticsChart = echarts.init(document.getElementById('mentalIllnessStatistics'));
+          var physicalIllnessStatisticsChart = echarts.init(document.getElementById('physicalIllnessStatistics'));
+          var fitChart = echarts.init(document.getElementById('fitChart'));
+
+          var activeId = $("#activeId").val();
+
+          //1.心理数据
+          var mentalIllnessTrue = 0;
+          var mentalIllnessFalse = 0;
+
+          //身体数据
+          var physicalIllnessFalse = 0;
+          var physicalIllnessTrue = 0;
+
+          var dayActive = 0.0;
+          var heightAvg = 0.0;
+          var weightAvg = 0.0;
+
+  
+
+           $.ajax({
+                    url:"/chart/mentalIllnessStatistics/"+activeId,//url
+                    async:false,//是否异步
+                    type:"GET",//提交方式
+                    data:{},//前台数据
+                    success:function(data){  //执行成功的返回函数
+                      mentalIllnessTrue = data.mentalIllnessTrue;
+                      mentalIllnessFalse = data.mentalIllnessFalse;
+
+                      physicalIllnessFalse = data.physicalIllnessFalse;
+                      physicalIllnessTrue = data.physicalIllnessTrue;
+
+                      dayActive=data.dayActive;
+                      heightAvg=data.heightAvg;
+                      weightAvg=data.weightAvg;
+
+                    },
+                    error:function(){//执行失败的返回函数
+                       alert("There is no data.");
+                    },
+                    dataType:"json"//数据格式
+                });
+
+
+          option1 = {
+              backgroundColor: '#F5F5F5',
+
+              title: {
+                  text: 'MentalIllness Statistics',
+                  left: 'center',
+                  top: 20,
+                  textStyle: {
+                      color: '#2c343c'
+                  }
+              },
+
+              tooltip : {
+                  trigger: 'item',
+                  formatter: "{a} <br/>{b} : {c} ({d}%)"
+              },
+
+              visualMap: {
+                  show: false,
+                  min: 80,
+                  max: 600,
+                  inRange: {
+                      colorLightness: [0, 1]
+                  }
+              },
+              series : [
+                  {
+                      name:'number',
+                      type:'pie',
+                      radius : '55%',
+                      center: ['50%', '50%'],
+                      data:[
+                          {value:mentalIllnessTrue, name:'Exist'},
+                          {value:mentalIllnessFalse, name:'Not'}
+                      ].sort(function (a, b) { return a.value - b.value; }),
+                      roseType: 'radius',
+                      label: {
+                          normal: {
+                              textStyle: {
+                                  color: '#2c343c'
+                              }
+                          }
+                      },
+                      labelLine: {
+                          normal: {
+                              lineStyle: {
+                                  color: '#2c343c'
+                              },
+                              smooth: 0.2,
+                              length: 10,
+                              length2: 20
+                          }
+                      },
+                      itemStyle: {
+                          normal: {
+                              color: '#c23531',
+                              shadowBlur: 200,
+                              shadowColor: 'rgba(0, 0, 0, 0.5)'
+                          }
+                      },
+
+                      animationType: 'scale',
+                      animationEasing: 'elasticOut',
+                      animationDelay: function (idx) {
+                          return Math.random() * 200;
+                      }
+                  }
+              ]
+          };
+
+          // 使用刚指定的配置项和数据显示图表。
+          mentalIllnessStatisticsChart.setOption(option1);
+
+
+          /**           2         **/
+
+          option2 = {
+              backgroundColor: '#F5F5F5',
+
+              title: {
+                  text: 'PhysicalIllness Statistics',
+                  left: 'center',
+                  top: 20,
+                  textStyle: {
+                      color: '#2c343c'
+                  }
+              },
+
+              tooltip : {
+                  trigger: 'item',
+                  formatter: "{a} <br/>{b} : {c} ({d}%)"
+              },
+
+              visualMap: {
+                  show: false,
+                  min: 80,
+                  max: 600,
+                  inRange: {
+                      colorLightness: [0, 1]
+                  }
+              },
+              series : [
+                  {
+                      name:'number',
+                      type:'pie',
+                      radius : '55%',
+                      center: ['50%', '50%'],
+                      data:[
+                          {value:physicalIllnessTrue, name:'Exist'},
+                          {value:physicalIllnessFalse, name:'Not'}
+                      ].sort(function (a, b) { return a.value - b.value; }),
+                      roseType: 'radius',
+                      label: {
+                          normal: {
+                              textStyle: {
+                                  color: '#2c343c'
+                              }
+                          }
+                      },
+                      labelLine: {
+                          normal: {
+                              lineStyle: {
+                                  color: '#2c343c'
+                              },
+                              smooth: 0.2,
+                              length: 10,
+                              length2: 20
+                          }
+                      },
+                      itemStyle: {
+                          normal: {
+                              color: '#c23531',
+                              shadowBlur: 200,
+                              shadowColor: 'rgba(0, 0, 0, 0.5)'
+                          }
+                      },
+
+                      animationType: 'scale',
+                      animationEasing: 'elasticOut',
+                      animationDelay: function (idx) {
+                          return Math.random() * 200;
+                      }
+                  }
+              ]
+          };
+
+          // 使用刚指定的配置项和数据显示图表。
+          physicalIllnessStatisticsChart.setOption(option2);
+
+
+          option3 = {
+              xAxis: {
+                  type: 'category',
+                  data: ['H(cm)', 'W(kg)', 'TIME(h)']
+              },
+              yAxis: {
+                  type: 'value'
+              },
+              series: [{
+                  data: [heightAvg, weightAvg, dayActive],
+                  type: 'bar'
+              }]
+          };
+
+
+          // 使用刚指定的配置项和数据显示图表。
+          fitChart.setOption(option3);
+
+
+      })
+
+  </script>
+
+
+</body>
+
+</html>

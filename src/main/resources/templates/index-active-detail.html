@@ -59,7 +59,10 @@
                 <div class="row">
                         <div class="col-md-12">
                            <div class="white-box">
-                               <h3><b>[[${result.active.name}]]</b> 
+                               <h3><b>[[${result.active.name}]]
+
+                                  <a th:href="@{/index/active/chart/}+${result.active.id}" class="btn btn-primary" type="submit"> Chart</a>
+                               </b> 
                                 <span class="pull-right">[[${result.active.code==''?result.active.id:result.active.code}]]</span></h3>
                                <hr>
                          <div class="row">
@@ -114,6 +117,8 @@
                              <div class="clearfix"></div>
                              <hr>
                              <div class="text-right">
+
+                              
                                <div th:if="${session.sessionUser!=null}">
                                <a th:if="${session.sessionroleuser eq 1}" th:href="@{/toChat/toProvider?providerId=}+${result.providerUser.id}" class="btn btn-primary" type="submit"> Chat</a>
                                <a th:if="${result.userInActive==false && session.sessionroleuser eq 1 }" th:href="@{/user/joinActive/}+${result.active.id}" class="btn btn-primary" type="submit"> Sign Up</a>

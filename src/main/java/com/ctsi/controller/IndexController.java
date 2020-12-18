@@ -127,4 +127,10 @@ public class IndexController {
         return "chat-to-user";
     }
 
+    @RequestMapping(value = "/index/active/chart/{activeId}")
+    public String toActiveChart(HttpServletRequest request,@PathVariable Integer activeId) {
+        request.setAttribute("activeId",activeId);
+        return "index-active-chart";
+    }
+
 }
