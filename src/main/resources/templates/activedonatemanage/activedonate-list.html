@@ -66,31 +66,24 @@
                                 <table class="table table-striped">
                               <thead>
                                 <tr>
-                                  <th>Activity Image</th>
-                                  <th>Activity Code</th>
                                   <th>Activity Name</th>
                                   <th>Activity Address</th>
                                   <th>Activity Cost</th>
                                   <th>Activity Time</th>
-                                  <th>Create Time</th>
+                                  <th>Pay Time</th>
                                   <th>Operation</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr th:each="item:${pageResult.list}">
-                                  <td>
-                                      <img style='width:60px;height:auto;' th:src='${item.image}' alt=''>
-                                  </td>
-                                  <td>[[${item.code}]]</td>
-                                  <td>[[${item.name}]]</td>
-                                  <td>[[${item.address}]]</td>
-                                  <td>[[${item.cost}]]</td>
-                                  <td>[[${#dates.format(item.startTime, 'MM/dd/yyyy')}]] TO [[${#dates.format(item.endTime, 'MM/dd/yyyy')}]]</td>
+                                 
+                                  <td>[[${item.active.name}]]</td>
+                                  <td>[[${item.active.address}]]</td>
+                                  <td>[[${item.active.cost}]]</td>
+                                  <td>[[${#dates.format(item.active.startTime, 'MM/dd/yyyy')}]] TO [[${#dates.format(item.active.endTime, 'MM/dd/yyyy')}]]</td>
                                   <td>[[${#dates.format(item.createTime, 'MM/dd/yyyy HH:mm:ss')}]] </td>
                                   <td>
-                                      <a  class="btn btn-success round" th:href="@{/active/participant/}+${item.id}">Participant</a>
-                                      <a  class="btn btn-primary round" th:href="@{/active/}+${item.id}" >Edit</a>
-                                      <a  class="btn btn-danger round" th:href="@{/active/delete/}+${item.id}">Delete</a>
+                                      <a  class="btn btn-success round" th:href="@{/active/}+${item.active.id}">Detail</a>
                                   </td>
                                 </tr>
                               </tbody>
@@ -100,17 +93,17 @@
                          <nav aria-label="Page navigation" style="text-align: center">
                                 <ul class="pagination">
                                       <li>
-                                       <a th:href="@{/active/pageList?page=}+${pageResult.page-1>0?pageResult.page-1:1}" aria-label="Previous">
+                                       <a th:href="@{/active/donateList?page=}+${pageResult.page-1>0?pageResult.page-1:1}" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                        </a>
                                       </li>
         
                                       <li th:each="i:${#numbers.sequence(1,pageResult.pageSize)}">
-                                         <a th:href="@{/active/pageList?page=}+${i}">[[${i}]]</a>
+                                         <a th:href="@{/active/donateList?page=}+${i}">[[${i}]]</a>
                                       </li>
         
                                       <li>
-                                          <a th:href="@{/active/pageList?page=}+${pageResult.page+1>pageResult.pageSize?pageResult.pageSize:pageResult.page+1}" aria-label="Next">
+                                          <a th:href="@{/active/donateList?page=}+${pageResult.page+1>pageResult.pageSize?pageResult.pageSize:pageResult.page+1}" aria-label="Next">
                                            <span aria-hidden="true">&raquo;</span>
                                           </a>
                                       </li>

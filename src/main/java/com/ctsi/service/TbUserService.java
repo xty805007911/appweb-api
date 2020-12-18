@@ -90,4 +90,9 @@ public class TbUserService {
             return tbFileUrl.getUrlFont() + tbFileUrl.getUrlEnd();
         }
     }
+
+    //修改用户信息
+    public void updatePersonInfo(TbUser user) {
+        userMapper.updateById(user);
+    }
 }

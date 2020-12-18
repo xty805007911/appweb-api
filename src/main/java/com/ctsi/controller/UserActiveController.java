@@ -66,7 +66,10 @@ public class UserActiveController {
         List<TbActive> activeList = activeUserService.selectActiveListByUser(sessionUser.getId(),null);
 
         request.setAttribute("activeList",activeList);
-        request.setAttribute("user",sessionUser);
+
+        TbUser dbUser = userService.getUserById(sessionUser.getId());
+        dbUser.setAvatar(userService.getUserAvatar(sessionUser.getId()));
+        request.setAttribute("user",dbUser);
         return "personinfo/person-document";//去编辑档案页面
     }
 

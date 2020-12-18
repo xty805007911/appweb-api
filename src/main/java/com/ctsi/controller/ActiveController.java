@@ -1,14 +1,8 @@
 package com.ctsi.controller;
 
 import com.ctsi.config.Constant;
-import com.ctsi.entity.TbActive;
-import com.ctsi.entity.TbActiveType;
-import com.ctsi.entity.TbFileUrl;
-import com.ctsi.entity.TbUser;
-import com.ctsi.service.MinioService;
-import com.ctsi.service.TbActiveService;
-import com.ctsi.service.TbActiveTypeService;
-import com.ctsi.service.TbFileUrlService;
+import com.ctsi.entity.*;
+import com.ctsi.service.*;
 import com.ctsi.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,6 +33,8 @@ public class ActiveController {
     MinioService minioService;
     @Autowired
     TbFileUrlService fileUrlService;
+    @Autowired
+    TbActiveDonateService activeDonateService;
 
     //添加活动
     @RequestMapping("/active/add")
@@ -129,6 +125,25 @@ public class ActiveController {
         request.setAttribute("pageResult",pageResult);
         request.setAttribute("activeId",id);
         return "activemanage/active-participant";
+    }
+
+    //donate捐赠活动
+    @RequestMapping("/active/donate")
+    public String activeDonate(HttpServletRequest request,TbActiveDonate activeDonate) {
+        TbUser sessionUser = (TbUser) request.getSession().getAttribute("sessionUser");
+        activeDonate.setDonateId(sessionUser.getId());
+        activeDonateService.addActiveDonate(activeDonate);
+
+        return "redirect:/active/donateList";
+    }
+
+    //捐助列表
+    @RequestMapping("/active/donateList")
+    public String activeDonateList(HttpServletRequest request,Integer page) {
+        TbUser sessionUser = (TbUser) request.getSession().getAttribute("sessionUser");
+        PageResult<TbActiveDonate> pageResult = activeDonateService.activeDonatePageList(page, Constant.PAGE_SIZE, sessionUser.getId());
+        request.setAttribute("pageResult",pageResult);
+        return "activedonatemanage/activedonate-list";
     }
 
 

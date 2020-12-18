@@ -1,6 +1,7 @@
 package com.ctsi.controller;
 
 import com.ctsi.config.Constant;
+import com.ctsi.entity.TbActive;
 import com.ctsi.entity.TbFileUrl;
 import com.ctsi.entity.TbRole;
 import com.ctsi.entity.TbUser;
@@ -156,6 +157,27 @@ public class CommonController {
     public String logout(HttpSession session) {
         session.removeAttribute("sessionUser");
         return "redirect:/";
+    }
+
+    //去编辑个人信息页面
+    @RequestMapping("/user/toEditInfo")
+    public String toEdit(HttpServletRequest request) {
+        TbUser sessionUser = (TbUser) request.getSession().getAttribute("sessionUser");
+        if(sessionUser == null) {
+            return "redirect:/toLogin";
+        }
+
+        TbUser dbUser = userService.getUserById(sessionUser.getId());
+        dbUser.setAvatar(userService.getUserAvatar(sessionUser.getId()));
+        request.setAttribute("user",dbUser);
+        return "personinfo/person-edit";//去编辑档案页面
+    }
+
+    //编辑个人信息
+    @RequestMapping("/user/editInfo")
+    public String editPersonInfo(TbUser user) {
+        userService.updatePersonInfo(user);
+        return "redirect:/user/document";
     }
 
     @GetMapping("/user/info")

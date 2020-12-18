@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="/assets/images/favicon.png" type="image/png">
+  <title>Info Edit</title>
+
+    <!--Begin  Page Level  CSS -->
+    <link href="/assets/plugins/morris-chart/morris.css" rel="stylesheet">
+    <link href="/assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet"/>
+     <!--End  Page Level  CSS -->
+    <link href="/assets/css/icons.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="js/html5shiv.min.js"></script>
+          <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="sticky-header">
+
+
+<!--引入左侧菜单栏-->
+<div th:replace="/lefter :: lefterBar(activeUrl='index')"></div>
+
+    <!-- main content start-->
+<div class="main-content" >
+<div th:replace="/header :: headerBar"></div>
+        <!--body wrapper start-->
+        <div class="wrapper">
+          <!--Start Page Title-->
+           <div class="page-title-box">
+                <h4 class="page-title">Info Edit</h4>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">Info Edit</a>
+                    </li>
+
+                    <li class="active">
+                        Info Edit
+                    </li>
+                </ol>
+                <div class="clearfix"></div>
+             </div>
+              <!--End Page Title-->
+
+                   <!--Start row-->
+                   <div class="row">
+
+                     <!-- Start inbox widget-->
+                     <div class="col-md-12">
+                        <div class="white-box">
+                          <h2 class="header-title"> Settings </h2>
+                            <div class="table-responsive">
+                                <form class="form-horizontal" th:action="@{/user/editInfo}" method="POST">
+
+                                    <input th:value="${user.id}" type="hidden" name="id">
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">Username</label>
+                                        <div class="col-md-6">
+                                          <input class="form-control" readonly="" th:value="${user.username}" type="text" name="username">
+                                        </div>
+                                      </div>
+
+                                    <div class="form-group">
+                                      <label class="col-md-2 control-label">Realname</label>
+                                      <div class="col-md-6">
+                                        <input class="form-control" th:value="${user.realname}" type="text" name="realname">
+                                      </div>
+                                    </div>
+
+                                     
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Gender</label>
+                                        <div class="col-sm-6">
+                                          <select class="form-control" name="gender">
+                                            <option th:selected="${user.gender eq 1}" value="1">Man</option>
+                                            <option th:selected="${user.gender eq 0}" value="0">Women</option>
+                                          </select>
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="col-md-2 control-label">Mobile</label>
+                                        <div class="col-md-6">
+                                          <input class="form-control" placeholder="Mobile" type="text" th:value="${user.mobile}" name="mobile">
+                                        </div>
+                                      </div>
+                                  
+                                    <div class="form-group">
+                                      <label class="col-md-2 control-label">Password</label>
+                                      <div class="col-md-6">
+                                        <input class="form-control" type="password"  th:value="${user.password}" name="password">
+                                      </div>
+                                    </div>
+                                  
+                                      
+                                    <div class="form-group">
+                                      <label class="col-sm-2 control-label">Address</label>
+                                      <div class="col-sm-6">
+                                        <input class="form-control" placeholder="Helping text" type="text" th:value="${user.address}" name="address">
+                                      </div>
+                                    </div>
+                                   
+                                    
+                                    <div class="form-group">
+                                      <label class="col-md-2 control-label">mentalIllness</label>
+                                      <div class="col-md-6">
+                                        <textarea class="form-control" rows="5" name="mentalIllness">[[${user.mentalIllness}]]</textarea>
+                                        <span class="help-block"><small>If you do not have mental illness, you do not need to fill it out.</small></span>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">physicalIllness</label>
+                                        <div class="col-md-6">
+                                          <textarea class="form-control" rows="5" name="physicalIllness">[[${user.physicalIllness}]]</textarea>
+                                          <span class="help-block"><small>If you do not have physical illness, you do not need to fill it out.</small></span>
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label class="col-md-2 control-label"></label>
+                                        <div class="col-md-6">
+                                            <button type="submit" class="btn btn-primary round" id="addButton">Edit</button>
+                                        </div>
+                                    </div>
+
+                                   
+                                    
+                                  </form>
+                            </div>
+
+                        </div>
+                       </div>
+					<!-- Start inbox widget-->
+                   </div>
+                   <!--End row-->
+
+			    </div>
+        <!-- End Wrapper-->
+
+
+        <!--Start  Footer -->
+        <div th:replace="/footer :: footerBar"></div>
+         <!--End footer -->
+
+       </div>
+      <!--End main content -->
+
+
+
+    <!--Begin core plugin -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/plugins/moment/moment.js"></script>
+    <script  src="/assets/js/jquery.slimscroll.js "></script>
+    <script src="/assets/js/jquery.nicescroll.js"></script>
+    <script src="/assets/js/functions.js"></script>
+    <!-- End core plugin -->
+
+    <!--Begin Page Level Plugin-->
+	<script src="/assets/plugins/morris-chart/morris.js"></script>
+    <script src="/assets/plugins/morris-chart/raphael-min.js"></script>
+    <script src="/assets/plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="/assets/pages/dashboard.js"></script>
+    <!--End Page Level Plugin-->
+
+
+</body>
+
+</html>
