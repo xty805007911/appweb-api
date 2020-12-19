@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="icon" href="/assets/images/favicon.png" type="image/png">
-  <title>List</title>
+  <title>Activity-Manager</title>
 
     <!--Begin  Page Level  CSS -->
     <link href="/assets/plugins/morris-chart/morris.css" rel="stylesheet">
@@ -48,7 +48,7 @@
                     </li>
 
                     <li class="active">
-                        
+                       
                     </li>
                 </ol>
                 <div class="clearfix"></div>
@@ -62,42 +62,42 @@
                      <div class="col-md-12">
                         <div class="white-box">
                           <h2 class="header-title"> Activity </h2>
-                          <div class="table-wrap">
-                                <table class="table table-striped">
-                              <thead>
-                                <tr>
-                                  <th>Activity Image</th>
-                                  <th>Activity Code</th>
-                                  <th>Activity Name</th>
-                                  <th>Activity Address</th>
-                                  <th>Activity Cost</th>
-                                  <th>Activity Time</th>
-                                  <th>Create Time</th>
-                                  <th>Operation</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr th:each="item:${pageResult.list}">
-                                  <td>
-                                      <img style='width:60px;height:auto;' th:src='${item.image}' alt=''>
-                                  </td>
-                                  <td>[[${item.code}]]</td>
-                                  <td>[[${item.name}]]</td>
-                                  <td>[[${item.address}]]</td>
-                                  <td>[[${item.cost}]]</td>
-                                  <td>[[${#dates.format(item.startTime, 'MM/dd/yyyy')}]] TO [[${#dates.format(item.endTime, 'MM/dd/yyyy')}]]</td>
-                                  <td>[[${#dates.format(item.createTime, 'MM/dd/yyyy HH:mm:ss')}]] </td>
-                                  <td>
-                                      <a  class="btn btn-success round" th:href="@{/active/participant/}+${item.id}">Participant</a>
-                                      <a  class="btn btn-primary round" th:href="@{/active/}+${item.id}" >Edit</a>
-                                      <a  class="btn btn-danger round" th:href="@{/active/delete/}+${item.id}">Delete</a>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                         </div>
-
-                         <nav aria-label="Page navigation" style="text-align: center">
+                            <div class="table-responsive">
+                              <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Image</th>
+                                    <th>Activity Name</th>
+                                    <th>Activity Address</th>
+                                    <th>Activity Cost</th>
+                                    <th>Activity Time</th>
+                                    <th>Create Time</th>
+                                    <th>Mobile</th>
+                                    <th>Operation</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr th:each="item:${pageResult.list}">
+                                    <td>[[${itemStat.index+1}]]</td>
+                                    <td><img style='width:60px;height:auto;' th:src='${item.image}' alt=''></td>
+                                    <td>[[${item.name}]]</td>
+                                    <td>[[${item.address}]]</td>
+                                    <td>[[${item.cost}]]</td>
+                                    <td>[[${#dates.format(item.startTime, 'MM/dd/yyyy')}]] TO [[${#dates.format(item.endTime, 'MM/dd/yyyy')}]]</td>
+                                    <td>[[${#dates.format(item.createTime, 'MM/dd/yyyy HH:mm:ss')}]] </td>
+                                    <td>[[${item.mobile}]]</td>
+                                    <td>
+                                        <a  class="btn btn-success round" th:href="@{/active/participant/}+${item.id}">Participant</a>
+                                        <a  class="btn btn-primary round" th:href="@{/active/}+${item.id}" >Edit</a>
+                                        <a  class="btn btn-danger round" th:href="@{/active/delete/}+${item.id}">Delete</a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              
+                            </div>
+                            <nav aria-label="Page navigation" style="text-align: center">
                                 <ul class="pagination">
                                       <li>
                                        <a th:href="@{/active/pageList?page=}+${pageResult.page-1>0?pageResult.page-1:1}" aria-label="Previous">
@@ -115,16 +115,15 @@
                                           </a>
                                       </li>
                                  </ul>
-                                </nav>
+                            </nav>
                         </div>
                        </div>
-                    <!-- Start inbox widget-->
+					<!-- Start inbox widget-->
                    </div>
                    <!--End row-->
 
-                   
-
-			  
+			    </div>
+        <!-- End Wrapper-->
 
 
         <!--Start  Footer -->
