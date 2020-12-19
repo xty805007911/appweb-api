@@ -84,6 +84,7 @@
                                   <td>[[${#dates.format(item.createTime, 'MM/dd/yyyy HH:mm:ss')}]] </td>
                                   <td>
                                       <a  class="btn btn-success round" th:href="@{/active/donate/}+${item.active.id}">Detail</a>
+                                      <a  class="btn btn-primary round" th:href="@{/active/user/list/active/}+${item.active.id}">Tracking</a>
                                   </td>
                                 </tr>
                               </tbody>

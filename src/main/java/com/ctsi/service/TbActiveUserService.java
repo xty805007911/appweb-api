@@ -3,14 +3,14 @@ package com.ctsi.service;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ctsi.config.Constant;
-import com.ctsi.entity.TbActive;
-import com.ctsi.entity.TbActiveUser;
-import com.ctsi.entity.TbActiveUserRecord;
-import com.ctsi.entity.TbFileUrl;
+import com.ctsi.entity.*;
 import com.ctsi.mapper.TbActiveMapper;
 import com.ctsi.mapper.TbActiveUserMapper;
 import com.ctsi.mapper.TbActiveUserRecordMapper;
 import com.ctsi.util.DateUtils;
+import com.ctsi.util.PageResult;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -145,5 +145,21 @@ public class TbActiveUserService {
         return record;
 
     }
+
+    //根据活动id查询所有用户
+    public PageResult<TbUser> selectAllUserByActiveId(Integer page,Integer size,Integer activeId) {
+        if(page == null || page <=0) {
+            page = 1;
+        }
+
+        PageHelper.startPage(page,size);
+        List<TbUser> userList = activeUserMapper.selectAllUserByActiveId(activeId);
+
+        PageInfo<TbUser> pageInfo = new PageInfo<>(userList);
+        PageResult<TbUser> pageResult = new PageResult<>(pageInfo);
+        return pageResult;
+
+    }
+
 
 }

@@ -115,8 +115,19 @@ public class UserActiveController {
         List<TbActive> activeList = activeUserService.selectActiveListByUser(userId,null);
 
         request.setAttribute("activeList",activeList);
-        request.setAttribute("user",userService.getUserById(userId));
+        TbUser dbUser = userService.getUserById(userId);
+        dbUser.setAvatar(userService.getUserAvatar(dbUser.getId()));
+        request.setAttribute("user",dbUser);
         return "personinfo/person-document";//去编辑档案页面
+    }
+
+    //根据活动id查询所有的用户
+    @RequestMapping("/active/user/list/active/{activeId}")
+    public String activeUserList(Integer page,@PathVariable Integer activeId,HttpServletRequest request) {
+
+        request.setAttribute("pageResult",activeUserService.selectAllUserByActiveId(page, Constant.PAGE_SIZE, activeId));
+
+        return "/activedonatemanage/activedonate-user-list";
     }
 
 }
