@@ -32,11 +32,11 @@
 
 
 <!--引入左侧菜单栏-->
-<div th:replace="/lefter :: lefterBar(activeUrl='usermanager')"></div>
+<div th:replace="lefter :: lefterBar(activeUrl='usermanager')"></div>
 
     <!-- main content start-->
 <div class="main-content" >
-<div th:replace="/header :: headerBar"></div>
+<div th:replace="header :: headerBar"></div>
         <!--body wrapper start-->
         <div class="wrapper">
           <!--Start Page Title-->
@@ -128,7 +128,7 @@
 
 
         <!--Start  Footer -->
-        <div th:replace="/footer :: footerBar"></div>
+        <div th:replace="footer :: footerBar"></div>
          <!--End footer -->
 
        </div>

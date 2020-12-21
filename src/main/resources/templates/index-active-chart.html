@@ -34,11 +34,11 @@
 
 
 <!--引入左侧菜单栏-->
-<div th:replace="/lefter :: lefterBar(activeUrl='index')"></div>
+<div th:replace="lefter :: lefterBar(activeUrl='index')"></div>
 
     <!-- main content start-->
 <div class="main-content" >
-<div th:replace="/header :: headerBar"></div>
+<div th:replace="header :: headerBar"></div>
 <input type="hidden" th:value="${activeId}" id="activeId">
         <!--body wrapper start-->
         <div class="wrapper">
@@ -70,7 +70,7 @@
 
 
         <!--Start  Footer -->
-        <div th:replace="/footer :: footerBar"></div>
+        <div th:replace="footer :: footerBar"></div>
          <!--End footer -->
 
       <!--End main content -->
