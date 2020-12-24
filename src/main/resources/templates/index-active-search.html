@@ -61,7 +61,7 @@
                         <div class="white-box">
                             
                            <div class="search-box-top">
-                              <form class="searchform" method="POST" th:action="@{/index/active/search}" style="width:300px;">
+                              <form  method="POST" th:action="@{/index/active/search}" style="width:300px;">
                                <div class="input-group">
                                  <input th:if="${activityQueryVO.activeTypeId!=null}" type="hidden" th:value="${activityQueryVO.activeTypeId}" name="activeTypeId">
                                  <input th:value="${activityQueryVO.keywords}" name="keywords" class="form-control input-search" placeholder="Search..." type="text">
