@@ -90,8 +90,8 @@
                                     <td>[[${item.mobile}]]</td>
                                     <td>
                                       <a  class="btn btn-primary round" th:href="@{/user/document/}+${item.id}">Detail</a>
-                                      <a th:if="${item.enabled eq 1}"  class="btn btn-danger round" th:href="@{/manager/user/enabled?userId=}+${item.id}+'&status=0'">SetDisabled</a>
-                                      <a th:if="${item.enabled eq 0}" class="btn btn-success round" th:href="@{/manager/user/enabled?userId=}+${item.id}+'&status=1'">Enabled</a>
+                                      <a th:if="${item.enabled eq 1}"  class="btn btn-danger round" th:href="@{/manager/user/enabled?userId=}+${item.id}+'&status=0'" onclick="return confirm('Disabled?')">SetDisabled</a>
+                                      <a th:if="${item.enabled eq 0}" class="btn btn-success round" th:href="@{/manager/user/enabled?userId=}+${item.id}+'&status=1'" onclick="return alert('Setting Success')">Enabled</a>
                                     </td>
                                   </tr>
                                 </tbody>
