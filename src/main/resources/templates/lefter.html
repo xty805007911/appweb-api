@@ -22,7 +22,7 @@
             <!--Sidebar nav-->
             <ul class="nav nav-pills nav-stacked custom-nav">
 
-                <li th:if="${session.sessionroleadmin eq 1 || session.sessionroleprovider eq 1}" th:class="${activeUrl=='activemanage'?'menu-list nav-active':'menu-list'}"><a href="#"><i class="icon-layers"></i> <span>活动管理</span></a>
+                <li th:if="${session.sessionroleadmin eq 1 || session.sessionroleprovider eq 1}" th:class="${activeUrl=='activemanage'?'menu-list nav-active':'menu-list'}"><a href="#"><i class="icon-layers"></i> <span>Activity Management</span></a>
                     <ul class="sub-menu-list">
                         <li><a th:href="@{/active/pageList}">Activity List</a></li>
                         <li><a th:href="@{/active/toAdd}"> Activity Add</a></li>
