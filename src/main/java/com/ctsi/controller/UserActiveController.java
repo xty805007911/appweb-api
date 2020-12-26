@@ -127,7 +127,7 @@ public class UserActiveController {
 
         request.setAttribute("pageResult",activeUserService.selectAllUserByActiveId(page, Constant.PAGE_SIZE, activeId));
 
-        return "/activedonatemanage/activedonate-user-list";
+        return "activedonatemanage/activedonate-user-list";
     }
 
 }
